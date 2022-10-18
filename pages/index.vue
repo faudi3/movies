@@ -2,9 +2,59 @@
   <div class="home">
     <Hero />
 
+    <div class="container search">
+      <input
+        @keyup.enter="$fetch"
+        type="text"
+        placeholder="Search"
+        v-model.lazy="searchInput"
+      />
+      <button @click="clearSearch" class="button" v-show="searchInput !== ''">
+        Clear Search
+      </button>
+    </div>
+
     <div class="container movies">
-      <div id="movie-grid" class="movies-grid">
+      <div v-if="searchInput === ''" id="movie-grid" class="movies-grid">
         <div class="movie" v-for="(movie, index) in movies" :key="index">
+          <div class="movie-img">
+            <img
+              :src="`https://image.tmdb.org/t/p/w500/${movie.poster_path}`"
+              alt=""
+            />
+            <p class="review">{{ movie.vote_average }}</p>
+            <p class="overview">{{ movie.overview }}</p>
+          </div>
+          <div class="info">
+            <p class="title">
+              {{ movie.title.slice(0, 25) }}
+              <span v-if="movie.title.length > 25">...</span>
+            </p>
+            <p class="release">
+              Released :
+              {{
+                new Date(movie.release_date).toLocaleDateString("en-us", {
+                  month: "long",
+                  day: "numeric",
+                  year: "numeric",
+                })
+              }}
+            </p>
+            <NuxtLink
+              class="button button-light"
+              :to="{ name: 'movies-movieid', params: { movieid: movie.id } }"
+            >
+              Get More Info
+            </NuxtLink>
+          </div>
+        </div>
+      </div>
+      <div id="movie-grid" class="movies-grid">
+        <div
+          class="movie"
+          v-for="(movie, index) in searchedMovies"
+          :key="index"
+        >
           <div class="movie-img">
             <img
               :src="`https://image.tmdb.org/t/p/w500/${movie.poster_path}`"
@@ -47,10 +97,17 @@ export default {
   data() {
     return {
       movies: [],
+      searchedMovies: [],
+      searchInput: "",
     };
   },
   async fetch() {
-    await this.getMovies();
+    if (this.searchInput === "") {
+      await this.getMovies();
+      return;
+    }
+
+    await this.searchMovies();
   },
   methods: {
     async getMovies() {
@@ -61,7 +118,19 @@ export default {
       result.data.results.forEach((movie) => {
         this.movies.push(movie);
       });
-      console.log(this.movies);
+    },
+    async searchMovies() {
+      const data = axios.get(`
+      https://api.themoviedb.org/3/search/movie?api_key=7f4ad19f252b1ae55f0f975a95aba17e&page=1&language=en-US&query=${this.searchInput}`);
+      const result = await data;
+      result.data.results.forEach((movie) => {
+        this.searchedMovies.push(movie);
+      });
+      console.log(this.searchedMovies);
+    },
+    clearSearch() {
+      this.searchInput = "";
+      this.searchedMovies = [];
     },
   },
 };
@@ -143,7 +212,7 @@ export default {
   color: #fff;
   border-radius: 0 0 16px 0;
   box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
-  0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    0 2px 4px -1px rgba(0, 0, 0, 0.06);
 }
 .home .movies .movies-grid .movie .movie-img .overview {
   line-height: 1.5;
