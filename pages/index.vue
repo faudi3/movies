@@ -1,6 +1,10 @@
 <template>
   <div class="home">
+    <!-- Hero -->
+
     <Hero />
+
+    <!-- Search -->
 
     <div class="container search">
       <input
@@ -13,8 +17,12 @@
         Clear Search
       </button>
     </div>
-
+    <!-- Loading -->
+    <Loading v-if="$fetchState.pending" />
+    <!-- Movies -->
     <div class="container movies">
+      <!-- before search Movies -->
+
       <div v-if="searchInput === ''" id="movie-grid" class="movies-grid">
         <div class="movie" v-for="(movie, index) in movies" :key="index">
           <div class="movie-img">
@@ -49,6 +57,8 @@
           </div>
         </div>
       </div>
+      <!-- after search Movies -->
+
       <div id="movie-grid" class="movies-grid">
         <div
           class="movie"
@@ -94,6 +104,23 @@
 <script>
 import axios from "axios";
 export default {
+  head() {
+    return {
+      title: "Movies Nuxt",
+      meta: [
+        {
+          hid: "description",
+          name: "description",
+          content: "latest movies in cinemas & online",
+        },
+        {
+          hid: "keywords",
+          name: "keywords",
+          content: "movies, stream,streaming, film,films",
+        },
+      ],
+    };
+  },
   data() {
     return {
       movies: [],
@@ -109,6 +136,7 @@ export default {
 
     await this.searchMovies();
   },
+  fetchDelay: 1000,
   methods: {
     async getMovies() {
       const data = axios.get(

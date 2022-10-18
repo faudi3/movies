@@ -53,13 +53,7 @@
   margin: 0 auto;
 }
 
-.loading {
-  height: 100vh;
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
+
 @keyframes circle-loading {
   to {
     transform: rotateZ(360deg);
