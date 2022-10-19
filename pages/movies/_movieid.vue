@@ -9,7 +9,7 @@
       <div class="movie-img">
         <img
           :src="`https://image.tmdb.org/t/p/w500/${movie.poster_path}`"
-          alt=""
+          alt="movie pic"
         />
       </div>
       <div class="movie-content">
@@ -55,9 +55,6 @@ export default {
     await this.getSingleMovie();
   },
 
-  // delay for fetching
-  fetchDelay: 1000,
-
   head() {
     return {
       title: this.movie.title,
@@ -76,7 +73,6 @@ export default {
       );
       const result = await data;
       this.movie = result.data;
-      console.log(this.movie);
     },
   },
 };

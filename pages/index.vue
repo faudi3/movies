@@ -1,18 +1,18 @@
 <template>
   <div class="home">
     <!-- Hero -->
-
     <Hero />
-
     <!-- Search -->
-
     <div class="container search">
       <input
         @keyup.enter="$fetch"
         type="text"
         placeholder="Search"
-        v-model.lazy="searchInput"
+        v-model="searchInput"
       />
+      <button @click="$fetch" class="button" v-show="searchInput !== ''">
+        Search
+      </button>
       <button @click="clearSearch" class="button" v-show="searchInput !== ''">
         Clear Search
       </button>
@@ -68,7 +68,7 @@
           <div class="movie-img">
             <img
               :src="`https://image.tmdb.org/t/p/w500/${movie.poster_path}`"
-              alt=""
+              alt="movie img"
             />
             <p class="review">{{ movie.vote_average }}</p>
             <p class="overview">{{ movie.overview }}</p>
@@ -98,6 +98,7 @@
         </div>
       </div>
     </div>
+    <div ref="observerRef" class="observer"></div>
   </div>
 </template>
 
@@ -126,17 +127,25 @@ export default {
       movies: [],
       searchedMovies: [],
       searchInput: "",
+      page: 1,
     };
+  },
+  watch: {
+    searchInput() {
+      if (this.searchInput === "") {
+        this.searchedMovies = [];
+      }
+    },
   },
   async fetch() {
     if (this.searchInput === "") {
+      this.searchedMovies = [];
       await this.getMovies();
       return;
     }
 
     await this.searchMovies();
   },
-  fetchDelay: 1000,
   methods: {
     async getMovies() {
       const data = axios.get(
@@ -147,23 +156,54 @@ export default {
         this.movies.push(movie);
       });
     },
+    async moreMovies() {
+      this.page += 1;
+      const data = axios.get(
+        `https://api.themoviedb.org/3/movie/top_rated?api_key=7f4ad19f252b1ae55f0f975a95aba17e&language=en-US&page=${this.page}`
+      );
+      const result = await data;
+      result.data.results.forEach((movie) => {
+        this.movies.push(movie);
+      });
+    },
     async searchMovies() {
+      this.searchedMovies = [];
       const data = axios.get(`
       https://api.themoviedb.org/3/search/movie?api_key=7f4ad19f252b1ae55f0f975a95aba17e&page=1&language=en-US&query=${this.searchInput}`);
       const result = await data;
       result.data.results.forEach((movie) => {
         this.searchedMovies.push(movie);
       });
-      console.log(this.searchedMovies);
     },
     clearSearch() {
       this.searchInput = "";
       this.searchedMovies = [];
     },
   },
+  mounted() {
+    let options = {
+      rootMargin: "0px",
+      thresold: 1.0,
+    };
+    let callback = (entries, observer) => {
+      if (entries[0].isIntersecting) {
+        console.log("peresek");
+        this.moreMovies();
+      }
+    };
+    let observer = new IntersectionObserver(callback, options);
+    observer.observe(this.$refs.observerRef);
+  },
 };
 </script>
 <style>
+.observer {
+  border: 1px solid red;
+  color: white;
+  font-size: 32px;
+  text-align: center;
+  background-color: green;
+}
 .home .loading {
   padding-top: 120px;
   align-items: flex-start;
@@ -185,6 +225,7 @@ export default {
 .home .search .button {
   border-top-left-radius: 0;
   border-bottom-left-radius: 0;
+  margin: 0 10px;
 }
 .home .movies {
   padding: 32px 16px;
