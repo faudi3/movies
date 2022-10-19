@@ -1,21 +1,20 @@
 <template>
   <div class="hero">
-    <img src="../assets/imgs/movieHero.jpg" alt=""/>
+    <img src="../assets/imgs/8857_.png" alt="" />
     <div class="text-container">
       <div class="text">
-        <span class="mini-heading">Now streaming</span>
-        <h1><span>Now</span> Streaming</h1>
+        <span class="mini-heading">Search films</span>
+        <h1><span>Online</span> Films database</h1>
         <a href="#movie-grid" class="button">View movies</a>
       </div>
     </div>
-
   </div>
 </template>
 
 <script>
 export default {
-  name: "Hero"
-}
+  name: "Hero",
+};
 </script>
 
 <style scoped>
@@ -25,12 +24,12 @@ export default {
 }
 @media (min-width: 750px) {
   .hero {
-
     height: 500px;
-  }}
+  }
+}
 
 .hero::after {
-  content: '';
+  content: "";
   position: absolute;
   top: 0;
   left: 0;
@@ -52,7 +51,8 @@ img {
   height: 100%;
   display: flex;
   flex-direction: column;
-  justify-content: center; }
+  justify-content: center;
+}
 .text {
   padding: 0 16px;
   width: 100%;
@@ -64,10 +64,10 @@ img {
   font-size: 18px;
   text-transform: uppercase;
   color: #c92502;
-  margin-bottom: 8px;}
+  margin-bottom: 8px;
+}
 @media (min-width: 750px) {
   .mini-heading {
-
     font-size: 22px;
   }
 }
@@ -75,7 +75,8 @@ h1 {
   color: #fff;
   font-size: 64px;
   font-weight: 200;
-  margin-bottom: 8px;}
+  margin-bottom: 8px;
+}
 @media (min-width: 750px) {
   h1 {
     font-size: 84px;
@@ -89,6 +90,4 @@ h1 {
   font-size: 20px;
   align-self: flex-start;
 }
-
-
 </style>

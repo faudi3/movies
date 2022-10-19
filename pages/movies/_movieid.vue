@@ -4,7 +4,6 @@
 
   <!-- Movie Info -->
   <div v-else class="single-movie container">
-    <NuxtLink class="button" :to="{ name: 'index' }"> Back </NuxtLink>
     <div class="movie-info">
       <div class="movie-img">
         <img
@@ -42,6 +41,7 @@
         <p class="movie-fact"><span>Overview:</span> {{ movie.overview }}</p>
       </div>
     </div>
+    <NuxtLink class="button" :to="{ name: 'index' }"> Back </NuxtLink>
   </div>
 </template>
 

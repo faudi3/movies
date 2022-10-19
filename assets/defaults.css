@@ -27,7 +27,7 @@
   text-decoration: none;
   color: inherit;
   padding: 8px 16px;
-  background-color: #c92502;
+  background-color: rgba(98, 84, 81, 0.9);
   border: none;
   color: #fff;
   border-radius: 4px;
@@ -35,13 +35,13 @@
   transition: 0.3s ease all;
 }
 .button:hover {
-  background-color: #891b02;
+  background-color: rgba(46, 42, 40, 0.9);
 }
 
 
 .button-light {
   background-color: transparent;
-  border: 1px solid #c92502;
+  border: 1px solid rgba(98, 84, 81, 0.9);
 }
 .button-light:hover {
   border-color: transparent;

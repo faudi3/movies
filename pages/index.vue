@@ -1,21 +1,26 @@
 <template>
-  <div class="home">
+  <div class="home" ref="home">
     <!-- Hero -->
     <Hero />
     <!-- Search -->
-    <div class="container search">
-      <input
-        @keyup.enter="$fetch"
-        type="text"
-        placeholder="Search"
-        v-model="searchInput"
-      />
-      <button @click="$fetch" class="button" v-show="searchInput !== ''">
-        Search
-      </button>
-      <button @click="clearSearch" class="button" v-show="searchInput !== ''">
-        Clear Search
-      </button>
+    <div @click="scrollUp" class="scrollToTop">up</div>
+    <!-- Search + filters -->
+    <div class="genres-wrap">
+      <div class="search">
+        <input
+          @keyup.enter="$fetch"
+          type="text"
+          placeholder="Search"
+          v-model="searchInput"
+        />
+        <button @click="$fetch" class="button" v-show="searchInput !== ''">
+          Search
+        </button>
+        <button @click="clearSearch" class="button" v-show="searchInput !== ''">
+          Clear Search
+        </button>
+      </div>
+      <Filters />
     </div>
     <!-- Loading -->
     <Loading v-if="$fetchState.pending" />
@@ -179,6 +184,9 @@ export default {
       this.searchInput = "";
       this.searchedMovies = [];
     },
+    scrollUp() {
+      window.scrollTo(0, 0);
+    },
   },
   mounted() {
     let options = {
@@ -197,6 +205,27 @@ export default {
 };
 </script>
 <style>
+.genres-wrap {
+  display: flex;
+  border: 1px solid yellow;
+  align-items: center;
+  justify-content: space-between;
+}
+.scrollToTop {
+  background-color: white;
+  border: none;
+  border-radius: 50%;
+  color: black;
+  cursor: pointer;
+  text-align: center;
+  font-size: 16px;
+  line-height: 48px;
+  height: 50px;
+  width: 48px;
+  position: fixed;
+  z-index: 101;
+  right: 5px;
+}
 .observer {
   border: 1px solid red;
   color: white;
@@ -210,11 +239,10 @@ export default {
 }
 .home .search {
   display: flex;
-  padding: 32px 16px;
+  padding: 32px 4px;
 }
 .home .search input {
-  max-width: 350px;
-  width: 100%;
+  width: 500px;
   padding: 12px 6px;
   font-size: 14px;
   border: none;
@@ -277,7 +305,7 @@ export default {
   align-items: center;
   width: 40px;
   height: 40px;
-  background-color: #c92502;
+  background-color: rgba(98, 84, 81, 0.9);
   color: #fff;
   border-radius: 0 0 16px 0;
   box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
@@ -287,11 +315,11 @@ export default {
   line-height: 1.5;
   position: absolute;
   bottom: 0;
-  background-color: rgba(201, 38, 2, 0.9);
+  background-color: rgba(98, 84, 81, 0.9);
   padding: 12px;
   color: #fff;
   transform: translateY(100%);
-  transition: 0.3s ease-in-out all;
+  transition: 0.5s ease-in-out all;
 }
 .home .movies .movies-grid .movie .info {
   margin-top: auto;

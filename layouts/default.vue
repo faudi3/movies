@@ -1,13 +1,10 @@
 <template>
   <div class="app">
-    <Nuxt/>
+    <Header />
+    <Nuxt />
   </div>
 </template>
 
-<script>
+<script></script>
 
-</script>
-
-<style scoped>
-
-</style>
+<style scoped></style>
