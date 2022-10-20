@@ -4,13 +4,9 @@
       v-for="option in optionsList"
       :key="option"
       :to="`${option === 'new' ? '/' : option}`"
-      ><div
-        class="option"
-        :class="getClasses(option)"
-        @click="changeRoute(option)"
-      >
+      :class="getClasses(option)"
+      ><div class="option" @click="changeRoute(option)">
         <p>{{ option }}</p>
-        <p>{{ $route.name }}</p>
       </div></NuxtLink
     >
     <!--
@@ -49,13 +45,12 @@ export default {
     },
     getClasses(option) {
       let a;
-      console.log(option, this.$route.name);
       if (option === "new" && this.$route.name === "index") {
-        a = "selected link";
+        a = "selected option";
       } else if (this.$route.name === option) {
-        a = "selected link";
+        a = "selected option";
       } else {
-        a = "link";
+        a = "option";
       }
 
       return a;
@@ -69,17 +64,22 @@ export default {
 .filters {
   display: flex;
   color: white;
+  text-decoration: none;
+  justify-content: flex-end;
+  gap: 15px;
 }
 .selected {
-  border: 1px solid red;
+  border: 3px solid #b0aeae;
 }
 .option {
-  margin: 0 20px;
-  font-size: 26px;
+  margin: 0;
+  font-size: 28px;
   background-color: #343434;
   padding: 10px;
   border-radius: 10px;
   cursor: pointer;
+  text-decoration: none;
+  color: white;
 }
 .option p {
   opacity: 0.7;
@@ -87,6 +87,7 @@ export default {
 }
 .option p:hover {
   opacity: 1;
+  transform: scale(1.1);
 }
 .link {
   text-decoration: none;

@@ -5,7 +5,6 @@ export const state = () => ({
 
 export const mutations = {
   changeSelected(state, payload) {
-    console.log(payload);
     state.selected = payload;
   },
 };

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <Option :props="title" />
+    <Option :props="props" />
   </div>
 </template>
 
@@ -9,7 +9,7 @@ export default {
   name: "countries",
   data() {
     return {
-      title: "countries",
+      props: { title: "countries", list: [] },
     };
   },
 };
