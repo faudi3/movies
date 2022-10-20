@@ -85,7 +85,7 @@ export default {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding: 32px 16px;
+  padding: 82px 16px;
 }
 .single-movie .button {
   align-self: flex-start;

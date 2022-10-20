@@ -132,7 +132,7 @@ export default {
       movies: [],
       searchedMovies: [],
       searchInput: "",
-      page: 1,
+      page: 0,
     };
   },
   watch: {
@@ -153,14 +153,17 @@ export default {
   },
   methods: {
     async getMovies() {
+      this.page += 1;
       const data = axios.get(
-        "https://api.themoviedb.org/3/movie/now_playing?api_key=7f4ad19f252b1ae55f0f975a95aba17e&language=en-US&page=1"
+        `https://api.themoviedb.org/3/movie/now_playing?api_key=7f4ad19f252b1ae55f0f975a95aba17e&language=en-US&page=${this.page}`
       );
       const result = await data;
       result.data.results.forEach((movie) => {
         this.movies.push(movie);
       });
     },
+
+    /*
     async moreMovies() {
       this.page += 1;
       const data = axios.get(
@@ -171,6 +174,7 @@ export default {
         this.movies.push(movie);
       });
     },
+*/
     async searchMovies() {
       this.searchedMovies = [];
       const data = axios.get(`
@@ -196,7 +200,7 @@ export default {
     let callback = (entries, observer) => {
       if (entries[0].isIntersecting) {
         console.log("peresek");
-        this.moreMovies();
+        this.getMovies();
       }
     };
     let observer = new IntersectionObserver(callback, options);
