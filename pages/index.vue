@@ -115,7 +115,6 @@ export default {
     };
     let callback = (entries, observer) => {
       if (entries[0].isIntersecting) {
-        console.log("peresek");
         this.getMovies();
       }
     };
@@ -131,21 +130,7 @@ export default {
   align-items: center;
   justify-content: space-between;
 }
-.scrollToTop {
-  background-color: white;
-  border: none;
-  border-radius: 50%;
-  color: black;
-  cursor: pointer;
-  text-align: center;
-  font-size: 16px;
-  line-height: 48px;
-  height: 50px;
-  width: 48px;
-  position: fixed;
-  z-index: 101;
-  right: 5px;
-}
+
 .observer {
   border: 1px solid red;
   color: white;

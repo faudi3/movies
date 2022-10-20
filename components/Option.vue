@@ -16,8 +16,13 @@
           {{ genre.name }}
         </p>
       </div>
-      <div v-show="!showOptions" class="container">
+      <div v-show="!showOptions" class="container movies">
+        <button class="button" @click="resetSelected">Back to genres</button>
+        <div @click="scrollUp" class="scrollToTop">up</div>
+
+        <h2 class="genre__name">{{ selectedGenre }}</h2>
         <Movies :props="props.list"></Movies>
+        <div ref="observerGenres" class="observer"></div>
       </div>
       <div v-if="props.title === 'countries'" class="genre-wrap">
         <input
@@ -40,16 +45,22 @@ import axios from "axios";
 export default {
   data() {
     return {
+      page: 1,
       genres: [],
       countries: [],
       years: [],
       inputVal: "",
       showOptions: true,
+      selectedGenre: -1,
+      selectedGenreId: 0,
     };
   },
   name: "Option",
   props: ["props"],
   methods: {
+    scrollUp() {
+      window.scrollTo(0, 0);
+    },
     async getGenres() {
       this.props.list = [];
       const data = axios.get(
@@ -61,15 +72,25 @@ export default {
       });
     },
     async getGenre(id) {
-      this.props.list = [];
+      if (this.page === 1) {
+        this.props.list = [];
+      }
+
+      /*    let a = this.props.list.find((elem) => elem.id === id);
+      this.selectedGenre = a.title;*/
       const data = axios.get(
-        `https://api.themoviedb.org/3/discover/movie?api_key=7f4ad19f252b1ae55f0f975a95aba17e&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1&with_genres=${id}&with_watch_monetization_types=flatrate`
+        `https://api.themoviedb.org/3/discover/movie?api_key=7f4ad19f252b1ae55f0f975a95aba17e&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=${this.page}&with_genres=${id}&with_watch_monetization_types=flatrate`
       );
+      this.page += 1;
+
       const result = await data;
       result.data.results.forEach((genre) => {
         this.props.list.push(genre);
       });
       this.showOptions = false;
+      let a = this.genres.find((genre) => genre.id === id);
+      this.selectedGenre = a.name;
+      this.selectedGenreId = a.id;
     },
 
     async getCountries() {
@@ -82,6 +103,11 @@ export default {
         this.countries.push(country["english_name"]);
       });
     },
+    resetSelected() {
+      this.showOptions = true;
+      this.selectedGenre = "";
+      this.page = 1;
+    },
   },
 
   mounted() {
@@ -90,6 +116,17 @@ export default {
     } else if (this.props.title === "countries") {
       this.getCountries();
     }
+    let options = {
+      rootMargin: "0px",
+      thresold: 1.0,
+    };
+    let callback = (entries, observer) => {
+      if (entries[0].isIntersecting) {
+        this.getGenre(this.selectedGenreId);
+      }
+    };
+    let observer = new IntersectionObserver(callback, options);
+    observer.observe(this.$refs.observerGenres);
   },
 };
 </script>
@@ -121,6 +158,11 @@ h1 {
   border: 1px solid white;
   cursor: pointer;
 }
+.genre__name {
+  color: white;
+  font-size: 44px;
+  margin: 20px auto;
+}
 .input {
   width: 500px;
   padding: 12px 6px;
@@ -140,5 +182,9 @@ h1 {
 p {
   border-bottom: 1px solid black;
   cursor: pointer;
+}
+.button {
+  height: 50px;
+  width: 120px;
 }
 </style>

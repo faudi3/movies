@@ -43,45 +43,45 @@ export default {
 </script>
 
 <style scoped>
-.home .movies .movies-grid {
+.movies .movies-grid {
   display: grid;
   column-gap: 32px;
   row-gap: 64px;
   grid-template-columns: 1fr;
 }
 @media (min-width: 500px) {
-  .home .movies .movies-grid {
+  .movies .movies-grid {
     grid-template-columns: repeat(2, 1fr);
   }
 }
 @media (min-width: 750px) {
-  .home .movies .movies-grid {
+  .movies .movies-grid {
     grid-template-columns: repeat(3, 1fr);
   }
 }
 @media (min-width: 1100px) {
-  .home .movies .movies-grid {
+  .movies .movies-grid {
     grid-template-columns: repeat(4, 1fr);
   }
 }
-.home .movies .movies-grid .movie {
+.movies .movies-grid .movie {
   position: relative;
   display: flex;
   flex-direction: column;
 }
-.home .movies .movies-grid .movie .movie-img {
+.movies .movies-grid .movie .movie-img {
   position: relative;
   overflow: hidden;
 }
-.home .movies .movies-grid .movie .movie-img:hover .overview {
+.movies .movies-grid .movie .movie-img:hover .overview {
   transform: translateY(0);
 }
-.home .movies .movies-grid .movie .movie-img img {
+.movies .movies-grid .movie .movie-img img {
   display: block;
   width: 100%;
   height: 100%;
 }
-.home .movies .movies-grid .movie .movie-img .review {
+.movies .movies-grid .movie .movie-img .review {
   position: absolute;
   top: 0;
   left: 0;
@@ -96,7 +96,7 @@ export default {
   box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
     0 2px 4px -1px rgba(0, 0, 0, 0.06);
 }
-.home .movies .movies-grid .movie .movie-img .overview {
+.movies .movies-grid .movie .movie-img .overview {
   line-height: 1.5;
   position: absolute;
   bottom: 0;
@@ -106,19 +106,19 @@ export default {
   transform: translateY(100%);
   transition: 0.5s ease-in-out all;
 }
-.home .movies .movies-grid .movie .info {
+.movies .movies-grid .movie .info {
   margin-top: auto;
 }
-.home .movies .movies-grid .movie .info .title {
+.movies .movies-grid .movie .info .title {
   margin-top: 8px;
   color: #fff;
   font-size: 20px;
 }
-.home .movies .movies-grid .movie .info .release {
+.movies .movies-grid .movie .info .release {
   margin-top: 8px;
   color: #c9c9c9;
 }
-.home .movies .movies-grid .movie .info .button {
+.movies .movies-grid .movie .info .button {
   margin-top: 8px;
 }
 </style>
