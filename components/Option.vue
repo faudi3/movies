@@ -9,15 +9,17 @@
       <div
         v-if="props.title === 'genres'"
         class="genre-wrap"
-        v-for="genre in genres"
+        v-for="(genre, idx) in genres"
       >
-        <p @click="getGenre(genre.id)" class="genre">
+        <p @click="getGenre(genre.id, idx)" :class="getClass(idx)">
           {{ genre.name }}
         </p>
       </div>
       <div class="container movies">
         <div @click="scrollUp" class="scrollToTop">up</div>
-        <h2 class="genre__name">{{ selectedGenre }}</h2>
+        <h2 v-if="props.title === 'genres'" class="genre__name">
+          {{ selectedGenre }}
+        </h2>
         <Movies :props="props.list"></Movies>
         <div ref="observerGenres" class="observer"></div>
       </div>
@@ -62,6 +64,7 @@ import axios from "axios";
 export default {
   data() {
     return {
+      activeIdx: 0,
       page: 1,
       genres: [],
       countries: [],
@@ -82,6 +85,13 @@ export default {
   name: "Option",
   props: ["props"],
   methods: {
+    getClass(idx) {
+      if (idx === this.activeIdx) {
+        return "selecGenre genre";
+      } else {
+        return "genre";
+      }
+    },
     saveInputA() {
       this.convertredInputA = `${this.inputAfter}-01-01`;
       this.filter = "gte";
@@ -106,8 +116,11 @@ export default {
       result.data.genres.forEach((genre) => {
         this.genres.push(genre);
       });
+      await this.getGenre(this.selectedGenreId, 0);
     },
-    async getGenre(id) {
+    async getGenre(id, idx) {
+      this.activeIdx = idx;
+      console.log(this.activeIdx);
       if (this.help !== id) {
         this.page = 1;
         this.props.list = [];
@@ -162,7 +175,6 @@ export default {
   mounted() {
     if (this.props.title === "genres") {
       this.getGenres();
-      this.getGenre(this.selectedGenreId);
     } else if (this.props.title === "countries") {
       this.getCountries();
     } else if (this.props.title === "years") {
@@ -173,7 +185,8 @@ export default {
     };
     let callback = (entries, observer) => {
       if (entries[0].isIntersecting) {
-        this.getGenre(this.selectedGenreId);
+        console.log("here");
+        this.getGenre(this.selectedGenreId, this.activeIdx);
       }
     };
     let observer = new IntersectionObserver(callback, options);
@@ -183,19 +196,29 @@ export default {
 </script>
 
 <style scoped>
+.selecGenre {
+  border: 4px solid white;
+}
 .genres {
   display: flex;
+
   flex-wrap: wrap;
 }
+
 .genre {
   font-size: 30px;
   color: white;
+  opacity: 0.6;
   border-radius: 10px;
   margin-top: 10px;
   cursor: pointer;
   padding: 10px;
   margin-right: 10px;
-  background-color: gray;
+  background-color: #434242;
+  transition: all 0.5s ease;
+}
+.genre:hover {
+  opacity: 1;
 }
 .options-wrap {
   padding-top: 50px;
