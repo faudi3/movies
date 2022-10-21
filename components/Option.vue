@@ -5,10 +5,9 @@
       <button class="button opt-back">Back</button>
     </NuxtLink>
     <h1>{{ props.title.toUpperCase() }}</h1>
-    <div class="container">
+    <div class="container genres">
       <div
         v-if="props.title === 'genres'"
-        v-show="showOptions"
         class="genre-wrap"
         v-for="genre in genres"
       >
@@ -16,10 +15,8 @@
           {{ genre.name }}
         </p>
       </div>
-      <div v-show="!showOptions" class="container movies">
-        <button class="button" @click="resetSelected">Back to genres</button>
+      <div class="container movies">
         <div @click="scrollUp" class="scrollToTop">up</div>
-
         <h2 class="genre__name">{{ selectedGenre }}</h2>
         <Movies :props="props.list"></Movies>
         <div ref="observerGenres" class="observer"></div>
@@ -33,6 +30,26 @@
         />
         <div class="country__under">
           <p v-for="country in countries">{{ country }}</p>
+        </div>
+      </div>
+      <div v-if="props.title === 'years'">
+        <div>
+          Input before
+          <input
+            v-model.lazy="inputBefore"
+            @keyup.enter="saveInputB"
+            type="text"
+            placeholder="1980"
+          />
+        </div>
+        <div>
+          Input after
+          <input
+            @keyup.enter="saveInputA"
+            v-model.lazy="inputAfter"
+            type="text"
+            placeholder="2015"
+          />
         </div>
       </div>
     </div>
@@ -51,13 +68,32 @@ export default {
       years: [],
       inputVal: "",
       showOptions: true,
-      selectedGenre: -1,
-      selectedGenreId: 0,
+      selectedGenre: "Action",
+      selectedGenreId: 28,
+      inputBefore: "",
+      inputAfter: "",
+      convertedInputA: "",
+      convertedInputB: "",
+      filter: "",
+      whichInput: "",
+      help: 28,
     };
   },
   name: "Option",
   props: ["props"],
   methods: {
+    saveInputA() {
+      this.convertredInputA = `${this.inputAfter}-01-01`;
+      this.filter = "gte";
+      this.whichInput = this.convertredInputA;
+      this.getYear();
+    },
+    saveInputB() {
+      this.convertredInputB = `${this.inputBefore}-12-31`;
+      this.filter = "lte";
+      this.whichInput = this.convertredInputB;
+      this.getYear();
+    },
     scrollUp() {
       window.scrollTo(0, 0);
     },
@@ -72,12 +108,15 @@ export default {
       });
     },
     async getGenre(id) {
-      if (this.page === 1) {
+      if (this.help !== id) {
+        this.page = 1;
         this.props.list = [];
       }
 
-      /*    let a = this.props.list.find((elem) => elem.id === id);
-      this.selectedGenre = a.title;*/
+      let a = this.genres.find((genre) => genre.id === id);
+      this.selectedGenre = a.name;
+      this.selectedGenreId = a.id;
+
       const data = axios.get(
         `https://api.themoviedb.org/3/discover/movie?api_key=7f4ad19f252b1ae55f0f975a95aba17e&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=${this.page}&with_genres=${id}&with_watch_monetization_types=flatrate`
       );
@@ -87,12 +126,8 @@ export default {
       result.data.results.forEach((genre) => {
         this.props.list.push(genre);
       });
-      this.showOptions = false;
-      let a = this.genres.find((genre) => genre.id === id);
-      this.selectedGenre = a.name;
-      this.selectedGenreId = a.id;
+      this.help = id;
     },
-
     async getCountries() {
       this.props.list = [];
       const data = axios.get(
@@ -103,17 +138,34 @@ export default {
         this.countries.push(country["english_name"]);
       });
     },
-    resetSelected() {
-      this.showOptions = true;
-      this.selectedGenre = "";
-      this.page = 1;
+    async getYear() {
+      if (this.page === 1) {
+        this.props.list = [];
+      }
+
+      const data = axios.get(
+        `https://api.themoviedb.org/3/discover/movie?api_key=7f4ad19f252b1ae55f0f975a95aba17e&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=${this.page}&release_date.${this.filter}=${this.whichInput}&with_watch_monetization_types=flatrate`
+      );
+      this.page += 1;
+
+      const result = await data;
+      console.log(result);
+      /*result.data.results.forEach((genre) => {
+        this.props.list.push(genre);
+      });*/
+      /*  this.showOptions = false;
+      let a = this.genres.find((genre) => genre.id === id);
+      this.selectedGenre = a.name;
+      this.selectedGenreId = a.id;*/
     },
   },
   mounted() {
     if (this.props.title === "genres") {
       this.getGenres();
+      this.getGenre(this.selectedGenreId);
     } else if (this.props.title === "countries") {
       this.getCountries();
+    } else if (this.props.title === "years") {
     }
     let options = {
       rootMargin: "0px",
@@ -131,6 +183,20 @@ export default {
 </script>
 
 <style scoped>
+.genres {
+  display: flex;
+  flex-wrap: wrap;
+}
+.genre {
+  font-size: 30px;
+  color: white;
+  border-radius: 10px;
+  margin-top: 10px;
+  cursor: pointer;
+  padding: 10px;
+  margin-right: 10px;
+  background-color: gray;
+}
 .options-wrap {
   padding-top: 50px;
 }
@@ -151,12 +217,7 @@ h1 {
   text-align: center;
   margin-top: 20px;
 }
-.genre {
-  font-size: 30px;
-  color: white;
-  border: 1px solid white;
-  cursor: pointer;
-}
+
 .genre__name {
   color: white;
   font-size: 44px;
