@@ -27,7 +27,8 @@
     <!-- Movies -->
     <div class="container movies">
       <!-- new Movies -->
-      <Movies v-if="searchInput === ''" :props="movies"> </Movies>
+      <Movies v-if="searchInput === ''" :props="movies" :propLink="link">
+      </Movies>
       <!--  searched Movies -->
       <Movies :props="searchedMovies"> </Movies>
     </div>
@@ -61,6 +62,7 @@ export default {
       searchedMovies: [],
       searchInput: "",
       page: 0,
+      link: 1,
     };
   },
   watch: {

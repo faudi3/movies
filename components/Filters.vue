@@ -9,19 +9,6 @@
         <p>{{ option }}</p>
       </div></NuxtLink
     >
-    <!--
-    :class="`${$route.name === '/' ? 'selected link' : 'link'}`"
--->
-
-    <!--    <NuxtLink to="/genres" class="link"
-      ><div class="option"><p>Жанры</p></div></NuxtLink
-    >
-    <NuxtLink to="/countries" class="link"
-      ><div class="option"><p>Страны</p></div></NuxtLink
-    >
-    <NuxtLink to="/years" class="link"
-      ><div class="option"><p>Годы</p></div></NuxtLink
-    >-->
   </div>
 </template>
 

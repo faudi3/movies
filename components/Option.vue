@@ -109,7 +109,6 @@ export default {
       this.page = 1;
     },
   },
-
   mounted() {
     if (this.props.title === "genres") {
       this.getGenres();
