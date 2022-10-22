@@ -48,6 +48,7 @@
   line-height: 48px;
   height: 50px;
   width: 48px;
+  bottom:15%;
   position: fixed;
   z-index: 101;
   right: 5px;

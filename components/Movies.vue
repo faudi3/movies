@@ -78,7 +78,7 @@ export default {
     saveFilm(obj) {
       this.active = !this.active;
       this.savedFilm = obj;
-      console.log(this.savedFilm);
+      window.scrollTo(0, 0);
     },
   },
 };
