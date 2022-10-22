@@ -55,6 +55,7 @@ export default {
   justify-content: flex-end;
   gap: 15px;
   padding-top: 60px;
+  padding-right: 30px;
 }
 .selected {
   border: 3px solid #b0aeae;

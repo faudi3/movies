@@ -20,15 +20,14 @@
           Clear Search
         </button>
       </div>
-      <Filters />
+      <Filters class="filters1" />
     </div>
     <!-- Loading -->
     <Loading v-if="$fetchState.pending" />
     <!-- Movies -->
     <div class="container movies">
       <!-- new Movies -->
-      <Movies v-if="searchInput === ''" :props="movies" :propLink="link">
-      </Movies>
+      <Movies v-if="searchInput === ''" :props="movies"> </Movies>
       <!--  searched Movies -->
       <Movies :props="searchedMovies"> </Movies>
     </div>
@@ -62,6 +61,7 @@ export default {
       searchedMovies: [],
       searchInput: "",
       page: 0,
+      pageSearch: 1,
       link: 1,
     };
   },
@@ -78,7 +78,8 @@ export default {
       await this.getMovies();
       return;
     }
-
+    this.searchedMovies = [];
+    this.pageSearch = 0;
     await this.searchMovies();
   },
   methods: {
@@ -92,11 +93,14 @@ export default {
         this.movies.push(movie);
       });
     },
-
     async searchMovies() {
-      this.searchedMovies = [];
+      if (this.pageSearch === 0) {
+        this.searchedMovies = [];
+      }
+      this.pageSearch += 1;
+
       const data = axios.get(`
-      https://api.themoviedb.org/3/search/movie?api_key=7f4ad19f252b1ae55f0f975a95aba17e&page=1&language=en-US&query=${this.searchInput}`);
+      https://api.themoviedb.org/3/search/movie?api_key=7f4ad19f252b1ae55f0f975a95aba17e&page=${this.pageSearch}&language=en-US&query=${this.searchInput}`);
       const result = await data;
       result.data.results.forEach((movie) => {
         this.searchedMovies.push(movie);
@@ -117,7 +121,11 @@ export default {
     };
     let callback = (entries, observer) => {
       if (entries[0].isIntersecting) {
-        this.getMovies();
+        if (this.searchedMovies.length > 0) {
+          this.searchMovies();
+        } else {
+          this.getMovies();
+        }
       }
     };
     let observer = new IntersectionObserver(callback, options);
@@ -128,17 +136,23 @@ export default {
 <style>
 .genres-wrap {
   display: flex;
-  border: 1px solid yellow;
+  width: 80%;
   align-items: center;
+
   justify-content: space-between;
+  margin: 0 auto;
+}
+.filters1 {
+  padding: 0 !important;
+  margin: 0;
 }
 
 .observer {
-  border: 1px solid red;
   color: white;
   font-size: 32px;
+  border: 1px solid green;
   text-align: center;
-  background-color: green;
+  background-color: inherit;
 }
 .home .loading {
   padding-top: 120px;
