@@ -1,10 +1,19 @@
 <template>
-  <header class="header">HEADER</header>
+  <header class="header">
+    HEADER
+    <NuxtLink to="/login">login</NuxtLink>
+    <button @click="logout">logout</button>
+  </header>
 </template>
 
 <script>
 export default {
   name: "Header",
+  methods: {
+    logout() {
+      this.$store.dispatch("logout");
+    },
+  },
 };
 </script>
 

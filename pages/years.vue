@@ -116,6 +116,8 @@ input {
   width: 500px;
   padding: 12px 6px;
   font-size: 24px;
+  border: 1px solid white;
+  color: white;
 }
 .input {
   color: white;

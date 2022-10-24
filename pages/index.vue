@@ -2,6 +2,10 @@
   <div class="home" ref="home">
     <!-- Hero -->
     <Hero />
+    <p v-if="this.$store.state.user !== null">
+      {{ this.$store.state.user.email }}
+    </p>
+    <p v-else>not logged</p>
     <!-- Search -->
     <div @click="scrollUp" class="scrollToTop">up</div>
     <!-- Search + filters -->
@@ -31,7 +35,9 @@
       <!--  searched Movies -->
       <Movies :props="searchedMovies"> </Movies>
     </div>
+    <!--
     <div ref="observerRef" class="observer"></div>
+-->
   </div>
 </template>
 
@@ -114,6 +120,7 @@ export default {
       window.scrollTo(0, 0);
     },
   },
+  /*
   mounted() {
     let options = {
       rootMargin: "0px",
@@ -130,6 +137,10 @@ export default {
     };
     let observer = new IntersectionObserver(callback, options);
     observer.observe(this.$refs.observerRef);
+  },
+*/
+  onBeforeMount() {
+    this.$store.dispatch("fetchUser");
   },
 };
 </script>
@@ -166,7 +177,8 @@ export default {
   width: 500px;
   padding: 12px 6px;
   font-size: 14px;
-  border: none;
+  border: 1px solid white;
+  color: white;
 }
 .home .search input:focus {
   outline: none;

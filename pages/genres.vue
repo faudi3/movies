@@ -64,13 +64,13 @@ export default {
     },
     async getGenre(id, idx) {
       this.activeIdx = idx;
-      console.log(this.activeIdx);
       if (this.help !== id) {
         this.page = 1;
         this.props.list = [];
       }
 
       let a = this.genres.find((genre) => genre.id === id);
+      console.log(a);
       this.selectedGenre = a.name;
       this.selectedGenreId = a.id;
 
@@ -94,7 +94,6 @@ export default {
     };
     let callback = (entries, observer) => {
       if (entries[0].isIntersecting) {
-        console.log("here");
         this.getGenre(this.selectedGenreId, this.activeIdx);
       }
     };
