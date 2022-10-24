@@ -35,9 +35,7 @@
       <!--  searched Movies -->
       <Movies :props="searchedMovies"> </Movies>
     </div>
-    <!--
     <div ref="observerRef" class="observer"></div>
--->
   </div>
 </template>
 
@@ -120,7 +118,9 @@ export default {
       window.scrollTo(0, 0);
     },
   },
-  /*
+  onBeforeMount() {
+    this.$store.dispatch("fetchUser");
+  },
   mounted() {
     let options = {
       rootMargin: "0px",
@@ -137,10 +137,6 @@ export default {
     };
     let observer = new IntersectionObserver(callback, options);
     observer.observe(this.$refs.observerRef);
-  },
-*/
-  onBeforeMount() {
-    this.$store.dispatch("fetchUser");
   },
 };
 </script>

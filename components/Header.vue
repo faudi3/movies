@@ -1,8 +1,11 @@
 <template>
   <header class="header">
-    HEADER
-    <NuxtLink to="/login">login</NuxtLink>
-    <button @click="logout">logout</button>
+    <NuxtLink to="/" class="header__title button">Header</NuxtLink>
+    <div class="right">
+      <NuxtLink class="button" to="/profile">Profile</NuxtLink>
+      <NuxtLink class="button" to="/login">login</NuxtLink>
+      <button class="button" @click="logout">logout</button>
+    </div>
   </header>
 </template>
 
@@ -27,5 +30,13 @@ header {
   border-bottom: 2px solid gray;
   position: fixed;
   z-index: 102;
+  justify-content: space-between;
+  align-items: center;
+}
+.header__title {
+  margin-left: 20px;
+}
+.right {
+  margin-right: 20px;
 }
 </style>

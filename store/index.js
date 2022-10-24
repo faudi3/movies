@@ -29,7 +29,10 @@ export const actions = {
     try {
       await signInWithEmailAndPassword(auth, email, password);
     } catch (err) {
-      console.error(err);
+      if (!auth.currentUser) {
+        alert("wrong pass");
+        return;
+      }
     }
     commit("SET_USER", auth.currentUser);
     this.$router.push("/");
@@ -40,7 +43,10 @@ export const actions = {
     try {
       await createUserWithEmailAndPassword(auth, email, password);
     } catch (err) {
-      console.error(err);
+      if (!auth.currentUser) {
+        alert("wrong pass");
+        return;
+      }
     }
     commit("SET_USER", auth.currentUser);
     this.$router.push("/");
