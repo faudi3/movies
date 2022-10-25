@@ -2,7 +2,9 @@
   <header class="header">
     <NuxtLink to="/" class="header__title button">Header</NuxtLink>
     <div class="right">
-      <NuxtLink class="button" to="/profile">Profile</NuxtLink>
+      <NuxtLink class="button" to="/profile" @click="loadList"
+        >Profile</NuxtLink
+      >
       <NuxtLink class="button" to="/login">login</NuxtLink>
       <button class="button" @click="logout">logout</button>
       <button class="button" @click="test">test</button>
@@ -14,16 +16,26 @@
 import { collection, addDoc } from "firebase/firestore";
 import { db } from "@/plugins/firebase";
 export default {
+  async fetch() {
+    await this.loadList();
+  },
   name: "Header",
   methods: {
-    logout() {
-      this.$store.dispatch("logout");
+    async logout() {
+      await this.$store.dispatch("logout");
+      this.$router.push("/login");
     },
     async test() {
       const docRef = await addDoc(collection(db, "users"), {
         email: "hi",
       });
       console.log("Document written with ID: ", docRef.id);
+    },
+    async loadList() {
+      if (this.$store.state.user.email) {
+        let c = this.$store.state.user.email;
+        await this.$store.dispatch("showList", { c });
+      }
     },
   },
 };

@@ -2,10 +2,10 @@
   <div class="home" ref="home">
     <!-- Hero -->
     <Hero />
-    <p v-if="this.$store.state.user !== null">
+    <!--    <p v-if="this.$store.state.user !== null">
       {{ this.$store.state.user.email }}
     </p>
-    <p v-else>not logged</p>
+    <p v-else>not logged</p>-->
     <!-- Search -->
     <div @click="scrollUp" class="scrollToTop">up</div>
     <!-- Search + filters -->
@@ -118,9 +118,7 @@ export default {
       window.scrollTo(0, 0);
     },
   },
-  onBeforeMount() {
-    this.$store.dispatch("fetchUser");
-  },
+
   mounted() {
     let options = {
       rootMargin: "0px",

@@ -6,21 +6,21 @@
         <v-card-subtitle>Login to your dashboard</v-card-subtitle>
         <v-card-text>
           <v-form>
-            <v-text-field
+            <input
               label="Login"
               name="login"
               prepend-icon="mdi-account"
               type="text"
               v-model="login_form.email"
-            ></v-text-field>
+            />
 
-            <v-text-field
+            <input
               label="Password"
               name="password"
               prepend-icon="mdi-lock"
               type="password"
               v-model="login_form.password"
-            ></v-text-field>
+            />
           </v-form>
         </v-card-text>
         <v-card-actions class="text-center">
@@ -52,17 +52,23 @@ export default {
     };
   },
   methods: {
-    loginbtn() {
-      this.$store.dispatch("login", {
-        email: this.login_form.email,
-        password: this.login_form.password,
+    async loginbtn() {
+      let e = this.login_form.email;
+      let p = this.login_form.password;
+      await this.$store.dispatch("login", {
+        email: e,
+        password: p,
       });
+      this.$router.push("/");
     },
-    registerbtn() {
-      this.$store.dispatch("register", {
-        email: this.login_form.email,
-        password: this.login_form.password,
+    async registerbtn() {
+      let e = this.login_form.email;
+      let p = this.login_form.password;
+      await this.$store.dispatch("register", {
+        email: e,
+        password: p,
       });
+      this.$router.push("/");
     },
   },
 };
@@ -74,5 +80,9 @@ export default {
   margin: 0 auto;
   display: flex;
   justify-content: center;
+}
+input {
+  background-color: gray;
+  color: black;
 }
 </style>
