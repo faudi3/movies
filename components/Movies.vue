@@ -25,7 +25,7 @@
               })
             }}
           </p>
-          <button @click="addFilm(movie)">like</button>
+          <button class="button" @click="addFilm(movie)">like</button>
           <NuxtLink
             v-if="$route.name === 'index'"
             class="button button-light"
@@ -78,15 +78,15 @@ export default {
     };
   },
   methods: {
-    ...mapActions(["addLiked"]),
+    addFilm(movie) {
+      let c = this.$store.state.user.email;
 
+      this.$store.dispatch("addInList", { c, movie });
+    },
     saveFilm(obj) {
       this.active = !this.active;
       this.savedFilm = obj;
       window.scrollTo(0, 0);
-    },
-    addFilm(movie) {
-      this.addLiked(movie);
     },
   },
 };

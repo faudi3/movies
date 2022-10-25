@@ -1,8 +1,12 @@
 <template>
-  <div>
-    <p v-if="this.$store.state.user !== null">
-      {{ this.$store.state.user.email }}
-    </p>
+  <div class="profile">
+    <div v-if="this.$store.state.user !== null">
+      <p @click="show">Ur name</p>
+      {{ this.$store.state.favList }}
+      <p></p>
+      <button class="button" @click="changeName">change name</button>
+    </div>
+
     <div v-else>
       <LoginModal />
     </div>
@@ -10,13 +14,30 @@
 </template>
 
 <script>
+import { doc, onSnapshot } from "firebase/firestore";
+import { db } from "~/plugins/firebase";
 export default {
+  data() {
+    return {
+      result: "",
+    };
+  },
   name: "profile",
+  methods: {
+    changeName() {},
+    show() {
+      console.log(this.$store.state.user.favList);
+    },
+  },
+  beforeMount() {
+    let c = this.$store.state.user.email;
+    this.$store.dispatch("showList", { c });
+  },
 };
 </script>
 
 <style scoped>
-p {
+.profile {
   padding: 60px;
   color: white;
 }

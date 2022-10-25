@@ -5,16 +5,25 @@
       <NuxtLink class="button" to="/profile">Profile</NuxtLink>
       <NuxtLink class="button" to="/login">login</NuxtLink>
       <button class="button" @click="logout">logout</button>
+      <button class="button" @click="test">test</button>
     </div>
   </header>
 </template>
 
 <script>
+import { collection, addDoc } from "firebase/firestore";
+import { db } from "@/plugins/firebase";
 export default {
   name: "Header",
   methods: {
     logout() {
       this.$store.dispatch("logout");
+    },
+    async test() {
+      const docRef = await addDoc(collection(db, "users"), {
+        email: "hi",
+      });
+      console.log("Document written with ID: ", docRef.id);
     },
   },
 };
