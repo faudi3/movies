@@ -25,8 +25,19 @@
               })
             }}
           </p>
-          <button class="button" @click="addFilm(movie)">like</button>
-          <button class="button" @click="deleteFilm(movie)">delete</button>
+          <div v-show="$store.state.isLogged == true">
+            <button
+              v-if="!checkInList(movie)"
+              class="button"
+              @click="addFilm(movie)"
+            >
+              like
+            </button>
+            <button v-else class="button" @click="deleteFilm(movie)">
+              delete
+            </button>
+            <!--            <button class="button" @click="checkInList(movie)">test</button>-->
+          </div>
 
           <NuxtLink
             v-if="$route.name === 'index'"
@@ -94,6 +105,14 @@ export default {
       let c = this.$store.state.user.email;
       let id = movie.id;
       this.$store.dispatch("delete", { id, c });
+    },
+    checkInList(movie) {
+      let s = this.$store.state.favList;
+      for (let i = 0; i < s.length; i++) {
+        if (s[i].id === movie.id) {
+          return true;
+        }
+      }
     },
   },
 };

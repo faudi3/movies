@@ -6,13 +6,7 @@ import {
 } from "firebase/auth";
 import { collection, addDoc } from "firebase/firestore";
 import { db } from "@/plugins/firebase";
-import {
-  doc,
-  setDoc,
-  deleteDoc,
-  updateDoc,
-  deleteField,
-} from "firebase/firestore";
+import { doc, setDoc } from "firebase/firestore";
 import { query, where, getDocs } from "firebase/firestore";
 
 export const state = () => ({
@@ -21,6 +15,7 @@ export const state = () => ({
   user: { email: "", password: "" },
   favList: [],
   currEmail: null,
+  isLogged: false,
 });
 
 export const mutations = {
@@ -39,6 +34,9 @@ export const mutations = {
   CLEAR_LIST(state) {
     state.favList = [];
   },
+  SET_LOGIN(state) {
+    state.isLogged = !state.isLogged;
+  },
 };
 
 export const actions = {
@@ -48,6 +46,7 @@ export const actions = {
       const res = await signInWithEmailAndPassword(auth, email, password);
       if (res) {
         commit("SET_USER", res.user.email);
+        commit("SET_LOGIN");
         console.log(state.user.email);
       }
     } catch (err) {
@@ -62,6 +61,7 @@ export const actions = {
       const res = await createUserWithEmailAndPassword(auth, email, password);
       if (res) {
         commit("SET_USER", res.user.email);
+        commit("SET_LOGIN");
       }
       await addDoc(collection(db, "users"), {
         email: email,
@@ -85,7 +85,7 @@ export const actions = {
       let info = el.data().list;
       const cityRef = doc(db, "users", el.id);
       setDoc(cityRef, { list: info.concat(details.movie) }, { merge: true });
-      final = el.data().list;
+      final = info.concat(details.movie);
     });
     commit("SET_LIST", final);
   },
@@ -120,6 +120,7 @@ export const actions = {
   },
   async logout({ commit }) {
     const res = await signOut(auth);
+    commit("SET_LOGIN");
 
     commit("CLEAR_USER");
     commit("CLEAR_LIST");
