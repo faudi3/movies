@@ -1,6 +1,10 @@
 <template>
   <header class="header">
     <NuxtLink to="/" class="header__title button">Header</NuxtLink>
+    <p v-if="this.$store.state.user.email !== ''">
+      logged as {{ this.$store.state.user.email }}
+    </p>
+    <p v-else>not logged in</p>
     <div class="right">
       <NuxtLink class="button" to="/profile" @click="loadList"
         >Profile</NuxtLink

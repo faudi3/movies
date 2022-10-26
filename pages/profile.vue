@@ -1,13 +1,13 @@
 <template>
-  <div class="profile">
-    <div v-if="this.$store.state.user !== null">
+  <div class="profile container">
+    <div v-if="this.$store.state.user.email !== ''">
       <p class="movies__title">Favourite movies</p>
       <Movies :props="this.$store.state.favList" />
-      <p></p>
-      <button class="button">change name</button>
+      <p>{{ this.$store.state.favList.length }}</p>
     </div>
 
     <div v-else>
+      <h2>Login to see profile page</h2>
       <LoginModal />
     </div>
   </div>
@@ -31,7 +31,7 @@ export default {
 
 <style scoped>
 .profile {
-  padding: 60px;
+  padding-top: 60px;
   color: white;
 }
 .movies__title {
@@ -39,5 +39,9 @@ export default {
   text-align: center;
   font-weight: bold;
   margin: 20px;
+}
+h2 {
+  font-size: 40px;
+  text-align: center;
 }
 </style>

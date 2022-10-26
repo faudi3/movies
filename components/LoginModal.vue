@@ -6,7 +6,7 @@
         <v-card-subtitle>Login to your dashboard</v-card-subtitle>
         <v-card-text>
           <v-form>
-            <input
+            <v-text-field
               label="Login"
               name="login"
               prepend-icon="mdi-account"
@@ -14,7 +14,7 @@
               v-model="login_form.email"
             />
 
-            <input
+            <v-text-field
               label="Password"
               name="password"
               prepend-icon="mdi-lock"
@@ -80,9 +80,5 @@ export default {
   margin: 0 auto;
   display: flex;
   justify-content: center;
-}
-input {
-  background-color: gray;
-  color: black;
 }
 </style>
