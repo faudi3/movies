@@ -34,6 +34,12 @@
   cursor: pointer;
   transition: 0.3s ease all;
 }
+@media screen and (max-width: 520px) {
+  .button {
+    padding: 4px 8px;
+    font-size:10px;
+  }
+}
 .button:hover {
   background-color: rgba(46, 42, 40, 0.9);
 }

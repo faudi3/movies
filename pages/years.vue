@@ -113,7 +113,7 @@ export default {
   margin-top: 20px;
 }
 input {
-  width: 500px;
+  max-width: 500px;
   padding: 12px 6px;
   font-size: 24px;
   border: 1px solid white;
@@ -132,5 +132,10 @@ input:focus {
   margin: 0 auto;
   width: 80%;
   display: flex;
+  flex-direction: column;
+}
+@media screen and (max-width: 768px) {
+  .years__wrap {
+  }
 }
 </style>

@@ -59,7 +59,6 @@ export default {
         email: e,
         password: p,
       });
-      this.$router.push("/");
     },
     async registerbtn() {
       let e = this.login_form.email;
@@ -68,7 +67,6 @@ export default {
         email: e,
         password: p,
       });
-      this.$router.push("/");
     },
   },
 };

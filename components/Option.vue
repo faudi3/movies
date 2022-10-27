@@ -30,6 +30,7 @@ h1 {
   max-width: 150px;
   max-height: 60px;
   margin-left: 20px;
+  margin-top: 20px;
 }
 
 p {

@@ -167,6 +167,20 @@ export default {
   display: flex;
   padding: 32px 4px;
 }
+@media screen and (max-width: 670px) {
+  .search {
+    padding: 16px 2px;
+    flex-direction: column;
+  }
+  .genres-wrap {
+    width: 90%;
+    flex-direction: column;
+  }
+  input {
+    margin: 0;
+    max-width: 400px;
+  }
+}
 .home .search input {
   width: 500px;
   padding: 12px 6px;

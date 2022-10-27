@@ -10,7 +10,7 @@ import { doc, setDoc } from "firebase/firestore";
 import { query, where, getDocs } from "firebase/firestore";
 
 export const state = () => ({
-  optionsList: ["new", "genres", "countries", "years"],
+  optionsList: ["new", "genres", "years"],
   selected: "new",
   user: { email: "", password: "" },
   favList: [],
@@ -47,7 +47,9 @@ export const actions = {
       if (res) {
         commit("SET_USER", res.user.email);
         commit("SET_LOGIN");
-        console.log(state.user.email);
+        this.$router.push("/");
+      } else {
+        return;
       }
     } catch (err) {
       if (!auth.currentUser) {
@@ -62,6 +64,9 @@ export const actions = {
       if (res) {
         commit("SET_USER", res.user.email);
         commit("SET_LOGIN");
+        this.$router.push("/");
+      } else {
+        return;
       }
       await addDoc(collection(db, "users"), {
         email: email,

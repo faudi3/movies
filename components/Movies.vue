@@ -34,7 +34,7 @@
               like
             </button>
             <button v-else class="button" @click="deleteFilm(movie)">
-              delete
+              delete from favourite
             </button>
             <!--            <button class="button" @click="checkInList(movie)">test</button>-->
           </div>

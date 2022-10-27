@@ -3,7 +3,6 @@
     <div v-if="this.$store.state.user.email !== ''">
       <p class="movies__title">Favourite movies</p>
       <Movies :props="this.$store.state.favList" />
-      <p>{{ this.$store.state.favList.length }}</p>
     </div>
 
     <div v-else>
