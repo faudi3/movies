@@ -25,7 +25,7 @@
 
 <script>
 import axios from "axios";
-
+import { genresList } from "@/assets/genresList.js";
 export default {
   name: "genres",
   data() {
@@ -52,12 +52,7 @@ export default {
       window.scrollTo(0, 0);
     },
     async getGenres() {
-      this.props.list = [];
-      const data = axios.get(
-        "https://api.themoviedb.org/3/genre/movie/list?api_key=7f4ad19f252b1ae55f0f975a95aba17e&language=en-US"
-      );
-      const result = await data;
-      result.data.genres.forEach((genre) => {
+      genresList.forEach((genre) => {
         this.genres.push(genre);
       });
       await this.getGenre(this.selectedGenreId, 0);
@@ -68,17 +63,13 @@ export default {
         this.page = 1;
         this.props.list = [];
       }
-
       let a = this.genres.find((genre) => genre.id === id);
-      console.log(a);
       this.selectedGenre = a.name;
       this.selectedGenreId = a.id;
-
       const data = axios.get(
         `https://api.themoviedb.org/3/discover/movie?api_key=7f4ad19f252b1ae55f0f975a95aba17e&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=${this.page}&with_genres=${id}&with_watch_monetization_types=flatrate`
       );
       this.page += 1;
-
       const result = await data;
       result.data.results.forEach((genre) => {
         this.props.list.push(genre);
