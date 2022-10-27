@@ -6,6 +6,8 @@
   box-sizing: border-box;
   font-family: 'Karla', sans-serif;
   scroll-behavior: smooth;
+  background-color: #211f1f;
+
 }
 
 .page-enter-active,

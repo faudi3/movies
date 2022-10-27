@@ -181,6 +181,20 @@ export default {
     max-width: 400px;
   }
 }
+@media screen and (max-width: 410px) {
+  .search {
+    padding: 16px 2px;
+    flex-direction: column;
+  }
+  .genres-wrap {
+    width: 90%;
+    flex-direction: column;
+  }
+  input {
+    margin: 0;
+    width: 250px;
+  }
+}
 .home .search input {
   width: 500px;
   padding: 12px 6px;
