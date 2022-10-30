@@ -9,7 +9,12 @@
         <img :src="`${movie.posterUrl}`" alt="movie pic" />
       </div>
       <div class="movie-content">
-        <h1>Title: {{ movie.nameRu }}</h1>
+        <h1>
+          Title:
+          {{
+            movie.nameRu || movie.nameEn || movie.nameOriginal || "Кривое АПИ"
+          }}
+        </h1>
         <p v-show="movie.slogan" class="movie-fact tagline">
           <span>Tagline:</span> "{{ movie.slogan }}"
         </p>

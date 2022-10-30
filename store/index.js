@@ -10,8 +10,8 @@ import { doc, setDoc } from "firebase/firestore";
 import { query, where, getDocs } from "firebase/firestore";
 
 export const state = () => ({
-  optionsList: ["new", "genres", "years", "kinopoisk"],
-  selected: "new",
+  optionsList: ["best", "genres", "years"],
+  selected: "best",
   user: { email: "", password: "" },
   favList: [],
   currEmail: null,
@@ -115,12 +115,11 @@ export const actions = {
     const qs = await getDocs(q);
     let final = [];
     qs.forEach((el) => {
-      let info = el.data().list.filter((mov) => mov.id !== details.id);
+      let info = el.data().list.filter((mov) => mov.filmId !== details.id);
       const cityRef = doc(db, "users", el.id);
       setDoc(cityRef, { list: info }, { merge: true });
       final = info;
       commit("SET_LIST", final);
-      console.log(el.id, " => ", el.data().list);
     });
   },
   async logout({ commit }) {

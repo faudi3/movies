@@ -3,7 +3,7 @@
     <NuxtLink
       v-for="option in optionsList"
       :key="option"
-      :to="`${option === 'new' ? '/' : option}`"
+      :to="`${option === 'best' ? '/' : option}`"
       :class="getClasses(option)"
       ><div class="option" @click="changeRoute(option)">
         <p>{{ option }}</p>
@@ -32,7 +32,7 @@ export default {
     },
     getClasses(option) {
       let a;
-      if (option === "new" && this.$route.name === "index") {
+      if (option === "best" && this.$route.name === "index") {
         a = "selected option";
       } else if (this.$route.name === option) {
         a = "selected option";

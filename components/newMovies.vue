@@ -91,13 +91,13 @@ export default {
     },
     deleteFilm(movie) {
       let c = this.$store.state.user.email;
-      let id = movie.id;
+      let id = movie.filmId;
       this.$store.dispatch("delete", { id, c });
     },
     checkInList(movie) {
       let s = this.$store.state.favList;
       for (let i = 0; i < s.length; i++) {
-        if (s[i].id === movie.id) {
+        if (s[i].filmId === movie.filmId) {
           return true;
         }
       }
