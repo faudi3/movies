@@ -8,7 +8,9 @@
         </div>
         <div class="info">
           <p class="title">
-            {{ movie.nameEn }}
+            {{
+              movie.nameEn || movie.nameRu || movie.nameOriginal || "кривой апи"
+            }}
           </p>
           <p class="release">
             Released :
@@ -44,21 +46,26 @@
     <div v-else class="backgr single-movie">
       <div class="movie-info">
         <div class="movie-img">
-          <img
-            :src="`https://image.tmdb.org/t/p/w500/${savedFilm.poster_path}`"
-            alt="movie pic"
-          />
+          <img :src="`${savedFilm.posterUrl}`" alt="movie pic" />
         </div>
         <div class="movie-content">
-          <h1>Title: {{ savedFilm.title }}</h1>
+          <h1>
+            Title:
+            {{
+              savedFilm.nameRu ||
+              savedFilm.En ||
+              savedFilm.nameOriginal ||
+              "кривой апи"
+            }}
+          </h1>
 
           <p class="movie-fact">
             <span>Released:</span>
-            {{ savedFilm.release_date }}
+            {{ savedFilm.year }}
           </p>
 
           <p class="movie-fact">
-            <span>Overview:</span> {{ savedFilm.overview }}
+            <span>Страны:</span> {{ savedFilm.countries[0].country }}
           </p>
         </div>
       </div>

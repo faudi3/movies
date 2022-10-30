@@ -8,7 +8,7 @@
         v-for="(genre, idx) in genres"
       >
         <p @click="getGenre(genre.id, idx)" :class="getClass(idx)">
-          {{ genre.name }}
+          {{ genre.genre }}
         </p>
       </div>
       <div class="container movies">
@@ -16,7 +16,7 @@
         <h2 v-if="props.title === 'genres'" class="genre__name">
           {{ selectedGenre }}
         </h2>
-        <Movies :props="props.list"></Movies>
+        <newMovies :props="props.list"></newMovies>
         <div ref="observerGenres" class="observer"></div>
       </div>
     </div>
@@ -35,9 +35,9 @@ export default {
       page: 1,
       genres: [],
       showOptions: true,
-      selectedGenre: "Action",
-      selectedGenreId: 28,
-      help: 28,
+      selectedGenre: "триллер",
+      selectedGenreId: 1,
+      help: 1,
     };
   },
   methods: {
@@ -57,24 +57,33 @@ export default {
       });
       await this.getGenre(this.selectedGenreId, 0);
     },
-    async getGenre(id, idx) {
+    async getGenre(fid, idx) {
       this.activeIdx = idx;
-      if (this.help !== id) {
+      if (this.help !== fid) {
         this.page = 1;
         this.props.list = [];
       }
-      let a = this.genres.find((genre) => genre.id === id);
-      this.selectedGenre = a.name;
+      let a = this.genres.find((genre) => genre.id === fid);
+      this.selectedGenre = a.genre;
       this.selectedGenreId = a.id;
       const data = axios.get(
-        `https://api.themoviedb.org/3/discover/movie?api_key=7f4ad19f252b1ae55f0f975a95aba17e&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=${this.page}&with_genres=${id}&with_watch_monetization_types=flatrate`
+        `https://kinopoiskapiunofficial.tech/api/v2.2/films?genres=${fid}&order=RATING&type=ALL&ratingFrom=0&ratingTo=10&yearFrom=1000&yearTo=3000&page=${this.page}`,
+        {
+          method: "GET",
+          headers: {
+            "X-API-KEY": "0ffafc09-256e-44f5-94cf-4db298e8a8a6",
+            "Content-Type": "application/json",
+          },
+        }
       );
+
       this.page += 1;
       const result = await data;
-      result.data.results.forEach((genre) => {
+      console.log(result);
+      result.data.items.forEach((genre) => {
         this.props.list.push(genre);
       });
-      this.help = id;
+      this.help = fid;
     },
   },
   mounted() {
