@@ -31,9 +31,9 @@
     <!-- Movies -->
     <div class="container movies">
       <!-- new Movies -->
-      <Movies v-if="searchInput === ''" :props="movies"> </Movies>
+      <newMovies v-if="searchInput === ''" :props="movies"> </newMovies>
       <!--  searched Movies -->
-      <Movies :props="searchedMovies"> </Movies>
+      <newMovies :props="searchedMovies"> </newMovies>
     </div>
     <div ref="observerRef" class="observer"></div>
   </div>
@@ -65,7 +65,7 @@ export default {
       searchedMovies: [],
       searchInput: "",
       page: 0,
-      pageSearch: 1,
+      pageSearch: 0,
       link: 1,
     };
   },
@@ -90,10 +90,18 @@ export default {
     async getMovies() {
       this.page += 1;
       const data = axios.get(
-        `https://api.themoviedb.org/3/movie/now_playing?api_key=7f4ad19f252b1ae55f0f975a95aba17e&language=en-US&page=${this.page}`
+        `https://kinopoiskapiunofficial.tech/api/v2.2/films/top?type=TOP_250_BEST_FILMS&page=${this.page}`,
+        {
+          method: "GET",
+          headers: {
+            "X-API-KEY": "0ffafc09-256e-44f5-94cf-4db298e8a8a6",
+            "Content-Type": "application/json",
+          },
+        }
       );
       const result = await data;
-      result.data.results.forEach((movie) => {
+
+      result.data.films.forEach((movie) => {
         this.movies.push(movie);
       });
     },
@@ -103,10 +111,19 @@ export default {
       }
       this.pageSearch += 1;
 
-      const data = axios.get(`
-      https://api.themoviedb.org/3/search/movie?api_key=7f4ad19f252b1ae55f0f975a95aba17e&page=${this.pageSearch}&language=en-US&query=${this.searchInput}`);
+      const data = axios.get(
+        `https://kinopoiskapiunofficial.tech/api/v2.1/films/search-by-keyword?keyword=${this.searchInput}&page=${this.pageSearch}`,
+        {
+          method: "GET",
+          headers: {
+            "X-API-KEY": "0ffafc09-256e-44f5-94cf-4db298e8a8a6",
+            "Content-Type": "application/json",
+          },
+        }
+      );
       const result = await data;
-      result.data.results.forEach((movie) => {
+      console.log(result);
+      result.data.films.forEach((movie) => {
         this.searchedMovies.push(movie);
       });
     },
@@ -126,7 +143,7 @@ export default {
     };
     let callback = (entries, observer) => {
       if (entries[0].isIntersecting) {
-        if (this.searchedMovies.length > 0) {
+        if (this.searchedMovies.length > 0 && this.pageSearch === 0) {
           this.searchMovies();
         } else {
           this.getMovies();

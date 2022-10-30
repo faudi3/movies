@@ -6,39 +6,22 @@
   <div v-else class="single-movie container">
     <div class="movie-info">
       <div class="movie-img">
-        <img
-          :src="`https://image.tmdb.org/t/p/w500/${movie.poster_path}`"
-          alt="movie pic"
-        />
+        <img :src="`${movie.posterUrl}`" alt="movie pic" />
       </div>
       <div class="movie-content">
-        <h1>Title: {{ movie.title }}</h1>
-        <p v-show="movie.tagline" class="movie-fact tagline">
-          <span>Tagline:</span> "{{ movie.tagline }}"
+        <h1>Title: {{ movie.nameRu }}</h1>
+        <p v-show="movie.slogan" class="movie-fact tagline">
+          <span>Tagline:</span> "{{ movie.slogan }}"
         </p>
         <p class="movie-fact">
           <span>Released:</span>
-          {{
-            new Date(movie.release_date).toLocaleString("en-us", {
-              month: "long",
-              day: "numeric",
-              year: "numeric",
-            })
-          }}
+          {{ movie.year }}
         </p>
         <p class="movie-fact">
-          <span>Duration:</span> {{ movie.runtime }} minutes
+          <span>Duration:</span> {{ movie.filmLength }} minutes
         </p>
-        <p class="movie-fact">
-          <span>Revenue:</span>
-          {{
-            movie.revenue.toLocaleString("en-us", {
-              style: "currency",
-              currency: "USD",
-            })
-          }}
-        </p>
-        <p class="movie-fact"><span>Overview:</span> {{ movie.overview }}</p>
+
+        <p class="movie-fact"><span>Overview:</span> {{ movie.description }}</p>
       </div>
     </div>
     <NuxtLink class="button" :to="{ name: 'index' }"> Back </NuxtLink>
@@ -57,7 +40,7 @@ export default {
 
   head() {
     return {
-      title: this.movie.title,
+      title: this.movie.nameEn,
     };
   },
 
@@ -69,9 +52,17 @@ export default {
   methods: {
     async getSingleMovie() {
       const data = axios.get(
-        `https://api.themoviedb.org/3/movie/${this.$route.params.movieid}?api_key=7f4ad19f252b1ae55f0f975a95aba17e&language=en-US`
+        `https://kinopoiskapiunofficial.tech/api/v2.2/films/${this.$route.params.movieid}`,
+        {
+          method: "GET",
+          headers: {
+            "X-API-KEY": "0ffafc09-256e-44f5-94cf-4db298e8a8a6",
+            "Content-Type": "application/json",
+          },
+        }
       );
       const result = await data;
+      console.log(result);
       this.movie = result.data;
     },
   },

@@ -10,7 +10,7 @@ import { doc, setDoc } from "firebase/firestore";
 import { query, where, getDocs } from "firebase/firestore";
 
 export const state = () => ({
-  optionsList: ["new", "genres", "years"],
+  optionsList: ["new", "genres", "years", "kinopoisk"],
   selected: "new",
   user: { email: "", password: "" },
   favList: [],
