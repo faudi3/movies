@@ -79,10 +79,10 @@ export default {
 
       this.page += 1;
       const result = await data;
-      console.log(result);
       result.data.items.forEach((genre) => {
         this.props.list.push(genre);
       });
+      this.props.list.forEach((post) => (post.filmId = post.kinopoiskId));
       this.help = fid;
     },
   },

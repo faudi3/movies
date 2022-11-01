@@ -102,7 +102,7 @@ export default {
       result.data.items.forEach((res) => {
         this.years.push(res);
       });
-      console.log(this.years);
+      this.years.forEach((post) => (post.filmId = post.kinopoiskId));
     },
   },
   mounted() {
