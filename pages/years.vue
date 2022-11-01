@@ -20,11 +20,12 @@
           placeholder="2015"
         />
       </div>
+      <button @click="searchWithTwo" class="button btn">search</button>
     </div>
     <div @click="scrollUp" class="scrollToTop">up</div>
 
     <div v-if="years.length > 0" class="movies-wrap">
-      <Movies :props="years"></Movies>
+      <new-movies :props="years"></new-movies>
     </div>
     <div ref="observerYears" class="observer">More</div>
   </div>
@@ -51,17 +52,27 @@ export default {
     };
   },
   methods: {
+    searchWithTwo() {
+      this.convertredInputA = `${this.inputAfter}`;
+      this.convertredInputB = `${this.inputBefore}`;
+      this.filter = `yearFrom=${this.convertredInputA}&yearTo=${this.convertredInputB}`;
+      this.getYear();
+      this.years = [];
+      this.inputAfter = "";
+      this.inputBefore = "";
+    },
+
     saveInputA() {
-      this.convertredInputA = `${this.inputAfter}-01-01`;
-      this.filter = "gte";
+      this.convertredInputA = `${this.inputAfter}`;
+      this.filter = `yearFrom=${this.convertredInputA}&yearTo=3000`;
       this.whichInput = this.convertredInputA;
       this.getYear();
       this.years = [];
       this.inputAfter = "";
     },
     saveInputB() {
-      this.convertredInputB = `${this.inputBefore}-12-31`;
-      this.filter = "lte";
+      this.convertredInputB = `${this.inputBefore}`;
+      this.filter = `yearFrom=1000&yearTo=${this.convertredInputB}`;
       this.whichInput = this.convertredInputB;
       this.getYear();
       this.years = [];
@@ -77,13 +88,21 @@ export default {
         this.props.list = [];
       }
       const data = axios.get(
-        `https://api.themoviedb.org/3/discover/movie?api_key=7f4ad19f252b1ae55f0f975a95aba17e&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=${this.page}&release_date.${this.filter}=${this.whichInput}&with_watch_monetization_types=flatrate`
+        `https://kinopoiskapiunofficial.tech/api/v2.2/films?order=RATING&type=ALL&ratingFrom=0&ratingTo=10&${this.filter}&page=1`,
+        {
+          method: "GET",
+          headers: {
+            "X-API-KEY": "0ffafc09-256e-44f5-94cf-4db298e8a8a6",
+            "Content-Type": "application/json",
+          },
+        }
       );
       this.page += 1;
       const result = await data;
-      result.data.results.forEach((res) => {
+      result.data.items.forEach((res) => {
         this.years.push(res);
       });
+      console.log(this.years);
     },
   },
   mounted() {
@@ -133,6 +152,11 @@ input:focus {
   width: 80%;
   display: flex;
   flex-direction: column;
+}
+.btn {
+  width: 100px;
+  align-self: center;
+  margin-top: 30px;
 }
 @media screen and (max-width: 768px) {
   .years__wrap {
