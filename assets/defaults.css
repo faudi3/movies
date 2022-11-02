@@ -77,7 +77,8 @@ html {
   border-color: transparent;
 }
 .heading {
-  color:white;
+  color: inherit !important;
+
   text-align: center;
   font-size:44px;
 }
@@ -86,6 +87,7 @@ html {
 .container {
   max-width: 1400px;
   margin: 0 auto;
+  color: inherit !important;
 }
 
 

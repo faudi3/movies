@@ -20,7 +20,7 @@ export default {
 
 <style scoped>
 h1 {
-  color: white;
+  color: inherit !important;
   font-size: 52px;
   text-align: center;
   margin-top: 20px;

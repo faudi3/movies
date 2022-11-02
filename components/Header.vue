@@ -68,11 +68,14 @@ export default {
 </script>
 
 <style scoped>
+p {
+  color: inherit;
+}
 header {
   height: 50px;
   display: flex;
   width: 100vw;
-  color: white;
+  color: inherit;
   background-color: inherit;
   border-bottom: 2px solid gray;
   position: fixed;

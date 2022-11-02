@@ -78,7 +78,7 @@ export default {
 
 <style scoped>
 .single-movie {
-  color: #fff;
+  color: inherit !important;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -94,7 +94,7 @@ export default {
   flex-direction: column;
   align-items: center;
   gap: 32px;
-  color: #fff;
+  color: inherit !important;
 }
 @media (min-width: 800px) {
   .single-movie .movie-info {

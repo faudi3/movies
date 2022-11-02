@@ -177,6 +177,9 @@ export default {
   text-align: center;
   background-color: inherit;
 }
+.home {
+  color: inherit !important;
+}
 .home .loading {
   padding-top: 120px;
   align-items: flex-start;
@@ -217,8 +220,8 @@ export default {
   width: 500px;
   padding: 12px 6px;
   font-size: 14px;
-  border: 1px solid white;
-  color: white;
+  border: 2px solid #125d32;
+  color: inherit !important;
 }
 .home .search input:focus {
   outline: none;

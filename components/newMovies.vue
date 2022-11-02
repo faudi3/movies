@@ -27,7 +27,7 @@
             </button>
             <button
               v-else
-              class="button"
+              class="button red"
               :class="$store.state.mode"
               @click="deleteFilm(movie)"
             >
@@ -141,6 +141,12 @@ export default {
   top: 50px;
   left: 0;
 }
+.red {
+  background-color: red;
+}
+.red:hover {
+  background-color: #fc5555;
+}
 .single-movie button {
   width: 250px;
   margin: 30px;
@@ -150,7 +156,7 @@ export default {
   flex-direction: column;
   align-items: center;
   gap: 32px;
-  color: #fff;
+  color: inherit !important;
 }
 @media (min-width: 800px) {
   .movie-info {
@@ -237,13 +243,13 @@ export default {
   width: 40px;
   height: 40px;
   background-color: rgba(98, 84, 81, 0.9);
-  color: #fff;
+  color: inherit !important;
   border-radius: 0 0 16px 0;
   box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
     0 2px 4px -1px rgba(0, 0, 0, 0.06);
 }
 .movies-grid .movie .movie-img .review.light {
-  background-color: rgb(11, 0, 20);
+  background-color: rgb(112, 94, 128);
 }
 .movies-grid .movie .movie-img .overview {
   line-height: 1.5;
@@ -251,7 +257,7 @@ export default {
   bottom: 0;
   background-color: rgba(98, 84, 81, 0.9);
   padding: 12px;
-  color: #fff;
+  color: inherit !important;
   transform: translateY(100%);
   transition: 0.5s ease-in-out all;
 }
@@ -261,12 +267,12 @@ export default {
 }
 .movies-grid .movie .info .title {
   margin-top: 8px;
-  color: #fff;
+  color: inherit !important;
   font-size: 20px;
 }
 .movies-grid .movie .info .release {
   margin-top: 8px;
-  color: #c9c9c9;
+  color: inherit !important;
 }
 .movies-grid .movie .info .button {
   margin-top: 8px;

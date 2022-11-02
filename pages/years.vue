@@ -125,6 +125,7 @@ export default {
 <style scoped>
 .observer {
   border: none !important;
+  color: inherit !important;
 }
 .movies-wrap {
   width: 80%;
@@ -136,10 +137,10 @@ input {
   padding: 12px 6px;
   font-size: 24px;
   border: 1px solid white;
-  color: white;
+  color: inherit !important;
 }
 .input {
-  color: white;
+  color: inherit;
   font-size: 30px;
   text-align: center;
   margin-top: 20px;

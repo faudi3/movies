@@ -4,9 +4,12 @@
       v-for="option in optionsList"
       :key="option"
       :to="`${option === 'best' ? '/' : option}`"
-      :class="getClasses(option)"
-      ><div class="option" @click="changeRoute(option)">
-        <p>{{ option }}</p>
+      ><div
+        class="button"
+        :class="getClasses(option)"
+        @click="changeRoute(option)"
+      >
+        {{ option }}
       </div></NuxtLink
     >
   </div>
@@ -33,11 +36,23 @@ export default {
     getClasses(option) {
       let a;
       if (option === "best" && this.$route.name === "index") {
-        a = "selected option";
+        if (this.$store.state.mode === "light") {
+          a = "light selected";
+        } else {
+          a = "selected";
+        }
       } else if (this.$route.name === option) {
-        a = "selected option";
+        if (this.$store.state.mode === "light") {
+          a = "light selected";
+        } else {
+          a = "selected";
+        }
       } else {
-        a = "option";
+        if (this.$store.state.mode === "light") {
+          a = "light";
+        } else {
+          a = "";
+        }
       }
 
       return a;
@@ -48,6 +63,12 @@ export default {
 </script>
 
 <style scoped>
+.button {
+  border: 3px solid transparent;
+  width: 120px;
+  text-align: center;
+  font-size: 24px;
+}
 .filters {
   display: flex;
   color: white;
@@ -60,27 +81,7 @@ export default {
 .selected {
   border: 3px solid #b0aeae;
 }
-.option {
-  margin: 0;
-  font-size: 28px;
-  background-color: #343434;
-  padding: 10px;
-  border-radius: 10px;
-  cursor: pointer;
-  text-decoration: none;
-  color: white;
-}
-.option.light {
-  background-color: rgb(11, 0, 20);
-}
-.option p {
-  opacity: 0.7;
-  transition: all 0.5s ease;
-}
-.option p:hover {
-  opacity: 1;
-  transform: scale(1.1);
-}
+
 .link {
   text-decoration: none;
   color: inherit;
