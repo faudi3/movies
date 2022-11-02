@@ -21,10 +21,7 @@ html {
   opacity: 0;
 }
 
-.app {
-  background-color: #211f1f;
-  min-height: 100vh;
-}
+
 
 .button {
   display: inline-block;
@@ -37,6 +34,13 @@ html {
   border-radius: 4px;
   cursor: pointer;
   transition: 0.3s ease all;
+}
+.button.light {
+  background-color: rgb(11, 0, 20);
+
+}
+.button.light:hover {
+  background-color: rgba(26, 108, 125, 0.9);
 }
 @media screen and (max-width: 520px) {
   .button {
@@ -71,6 +75,11 @@ html {
 }
 .button-light:hover {
   border-color: transparent;
+}
+.heading {
+  color:white;
+  text-align: center;
+  font-size:44px;
 }
 
 

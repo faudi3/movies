@@ -3,9 +3,11 @@
     <img src="../assets/imgs/8857_.png" alt="" />
     <div class="text-container">
       <div class="text">
-        <span class="mini-heading">Search films</span>
-        <h1><span>Online</span> Films database</h1>
-        <a href="#movie-grid" class="button">View movies</a>
+        <span class="mini-heading">Искать фильмы</span>
+        <h1><span>online </span>База фильмов</h1>
+        <a href="#movie-grid" class="button" :class="this.$store.state.mode"
+          >изучить фильмы</a
+        >
       </div>
     </div>
   </div>
@@ -73,7 +75,7 @@ img {
 }
 h1 {
   color: #fff;
-  font-size: 64px;
+  font-size: 50px;
   font-weight: 200;
   margin-bottom: 8px;
 }

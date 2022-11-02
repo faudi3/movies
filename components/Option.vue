@@ -2,7 +2,7 @@
   <div>
     <Filters class="filters" />
     <NuxtLink :to="{ name: 'index' }">
-      <button class="button opt-back">Back</button>
+      <button class="button opt-back" :class="$store.state.mode">назад</button>
     </NuxtLink>
     <h1>{{ props.title.toUpperCase() }}</h1>
   </div>

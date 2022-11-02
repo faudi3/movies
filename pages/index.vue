@@ -14,18 +14,19 @@
         <input
           @keyup.enter="$fetch"
           type="text"
-          placeholder="Search"
+          placeholder="Искать..."
           v-model="searchInput"
         />
         <button @click="$fetch" class="button" v-show="searchInput !== ''">
-          Search
+          Поиск
         </button>
         <button @click="clearSearch" class="button" v-show="searchInput !== ''">
-          Clear Search
+          Очистить поиск
         </button>
       </div>
       <Filters class="filters1" />
     </div>
+    <h2 class="heading">250 Лучших Фильмов</h2>
     <!-- Loading -->
     <Loading v-if="$fetchState.pending" />
     <!-- Movies -->

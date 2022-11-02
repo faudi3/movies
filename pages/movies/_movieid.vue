@@ -10,26 +10,28 @@
       </div>
       <div class="movie-content">
         <h1>
-          Title:
+          Название:
           {{
             movie.nameRu || movie.nameEn || movie.nameOriginal || "Кривое АПИ"
           }}
         </h1>
         <p v-show="movie.slogan" class="movie-fact tagline">
-          <span>Tagline:</span> "{{ movie.slogan }}"
+          <span>Цитата:</span> "{{ movie.slogan }}"
         </p>
         <p class="movie-fact">
-          <span>Released:</span>
+          <span>Дата выхода:</span>
           {{ movie.year }}
         </p>
         <p class="movie-fact">
-          <span>Duration:</span> {{ movie.filmLength }} minutes
+          <span>Хронометраж:</span> {{ movie.filmLength }} minutes
         </p>
 
-        <p class="movie-fact"><span>Overview:</span> {{ movie.description }}</p>
+        <p class="movie-fact"><span>Описание:</span> {{ movie.description }}</p>
       </div>
     </div>
-    <NuxtLink class="button" :to="{ name: 'index' }"> Back </NuxtLink>
+    <NuxtLink class="button" :class="$store.state.mode" :to="{ name: 'index' }">
+      Назад
+    </NuxtLink>
   </div>
 </template>
 

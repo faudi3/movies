@@ -4,16 +4,16 @@
       <div class="movie" v-for="(movie, index) in props" :key="index">
         <div class="movie-img">
           <img :src="`${movie.posterUrl}`" alt="" />
-          <p class="review">{{ index + 1 }}</p>
+          <p class="review" :class="$store.state.mode">{{ index + 1 }}</p>
         </div>
         <div class="info">
           <p class="title">
             {{
-              movie.nameEn || movie.nameRu || movie.nameOriginal || "кривой апи"
+              movie.nameRu || movie.nameEn || movie.nameOriginal || "кривой апи"
             }}
           </p>
           <p class="release">
-            Released :
+            Дата выпуска :
             {{ movie.year }}
           </p>
           <div v-show="$store.state.isLogged == true">
@@ -21,25 +21,31 @@
               v-if="!checkInList(movie)"
               class="button"
               @click="addFilm(movie)"
+              :class="$store.state.mode"
             >
-              like
+              добавить в избранное
             </button>
-            <button v-else class="button" @click="deleteFilm(movie)">
-              delete from favourite
+            <button
+              v-else
+              class="button"
+              :class="$store.state.mode"
+              @click="deleteFilm(movie)"
+            >
+              удалить из избранных
             </button>
             <!--            <button class="button" @click="checkInList(movie)">test</button>-->
           </div>
 
           <NuxtLink
-            v-if="$route.name === 'index'"
             class="button button-light"
+            :class="$store.state.mode"
             :to="{ name: 'movies-movieid', params: { movieid: movie.filmId } }"
           >
-            Get More Info
+            Больше
           </NuxtLink>
-          <button @click="saveFilm(movie)" class="button" v-else>
+          <!--          <button @click="saveFilm(movie)" class="button" v-else>
             More Info
-          </button>
+          </button>-->
         </div>
       </div>
     </div>
@@ -50,7 +56,7 @@
         </div>
         <div class="movie-content">
           <h1>
-            Title:
+            Название:
             {{
               savedFilm.nameRu ||
               savedFilm.En ||
@@ -60,12 +66,20 @@
           </h1>
 
           <p class="movie-fact">
-            <span>Released:</span>
+            <span>Выход:</span>
             {{ savedFilm.year }}
           </p>
 
           <p class="movie-fact">
             <span>Страны:</span> {{ savedFilm.countries[0].country }}
+          </p>
+          <p class="movie-fact">
+            <span>Жанр:</span>
+            {{ savedFilm.genres[0].genre }}
+          </p>
+          <p class="movie-fact">
+            <span>Рейтинг кинопоиска:</span>
+            {{ savedFilm.ratingKinopoisk }}
           </p>
         </div>
       </div>
@@ -120,7 +134,7 @@ export default {
   justify-content: center;
   padding: 82px 16px;
   background-color: #272626;
-  min-height: 70%;
+  min-height: 150%;
   width: 100%;
   position: absolute;
   z-index: 3;
@@ -228,6 +242,9 @@ export default {
   box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
     0 2px 4px -1px rgba(0, 0, 0, 0.06);
 }
+.movies-grid .movie .movie-img .review.light {
+  background-color: rgb(11, 0, 20);
+}
 .movies-grid .movie .movie-img .overview {
   line-height: 1.5;
   position: absolute;
@@ -238,6 +255,7 @@ export default {
   transform: translateY(100%);
   transition: 0.5s ease-in-out all;
 }
+
 .movies-grid .movie .info {
   margin-top: auto;
 }

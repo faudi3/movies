@@ -3,7 +3,7 @@
     <Option :props="props" />
     <div class="years__wrap">
       <div class="input">
-        Input before
+        До какого года
         <input
           v-model.lazy="inputBefore"
           @keyup.enter="saveInputB"
@@ -12,7 +12,7 @@
         />
       </div>
       <div class="input">
-        Input after
+        После какого года
         <input
           @keyup.enter="saveInputA"
           v-model.lazy="inputAfter"
@@ -20,14 +20,14 @@
           placeholder="2015"
         />
       </div>
-      <button @click="searchWithTwo" class="button btn">search</button>
+      <button @click="searchWithTwo" class="button btn">искать</button>
     </div>
     <div @click="scrollUp" class="scrollToTop">up</div>
 
     <div v-if="years.length > 0" class="movies-wrap">
       <new-movies :props="years"></new-movies>
     </div>
-    <div ref="observerYears" class="observer">More</div>
+    <div ref="observerYears" class="observer">Больше</div>
   </div>
 </template>
 

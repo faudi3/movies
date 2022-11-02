@@ -16,11 +16,19 @@ export const state = () => ({
   favList: [],
   currEmail: null,
   isLogged: false,
+  mode: "dark",
 });
 
 export const mutations = {
   changeSelected(state, payload) {
     state.selected = payload;
+  },
+  changeMode(state) {
+    if (state.mode === "dark") {
+      state.mode = "light";
+    } else {
+      state.mode = "dark";
+    }
   },
   SET_USER(state, payload) {
     state.user.email = payload;

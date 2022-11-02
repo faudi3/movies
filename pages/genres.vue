@@ -13,8 +13,8 @@
       </div>
       <div class="container movies">
         <div @click="scrollUp" class="scrollToTop">up</div>
-        <h2 v-if="props.title === 'genres'" class="genre__name">
-          {{ selectedGenre }}
+        <h2 v-if="props.title === 'genres'" class="heading">
+          Жанр: {{ selectedGenre }}
         </h2>
         <newMovies :props="props.list"></newMovies>
         <div ref="observerGenres" class="observer"></div>

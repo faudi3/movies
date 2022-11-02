@@ -1,19 +1,42 @@
 <template>
   <header class="header">
-    <NuxtLink to="/" class="header__title button">Home</NuxtLink>
-    <p v-if="this.$store.state.user.email !== ''">
-      logged as {{ this.$store.state.user.email }}
+    <NuxtLink
+      to="/"
+      class="header__title button"
+      :class="this.$store.state.mode"
+      >главная</NuxtLink
+    >
+    <p
+      v-if="this.$store.state.user.email !== ''"
+      class="button"
+      :class="this.$store.state.mode"
+    >
+      авторизован как {{ this.$store.state.user.email }}
     </p>
-    <p v-else>not logged in</p>
+    <p v-else>не авторизован</p>
+    <Toggle />
     <div class="right">
-      <NuxtLink class="button" to="/profile" @click="loadList"
-        >Profile</NuxtLink
+      <NuxtLink
+        class="button"
+        :class="this.$store.state.mode"
+        to="/profile"
+        @click="loadList"
+        >профиль</NuxtLink
       >
-      <NuxtLink v-show="!$store.state.isLogged" class="button" to="/login"
-        >login</NuxtLink
+      <NuxtLink
+        v-show="!$store.state.isLogged"
+        class="button"
+        to="/login"
+        :class="this.$store.state.mode"
+        >логин</NuxtLink
       >
-      <button v-show="$store.state.isLogged" class="button" @click="logout">
-        Logout
+      <button
+        v-show="$store.state.isLogged"
+        class="button"
+        :class="this.$store.state.mode"
+        @click="logout"
+      >
+        выход
       </button>
     </div>
   </header>
@@ -23,6 +46,7 @@
 import { collection, addDoc } from "firebase/firestore";
 import { db } from "@/plugins/firebase";
 export default {
+  props: ["mode"],
   async fetch() {
     await this.loadList();
   },
@@ -49,7 +73,7 @@ header {
   display: flex;
   width: 100vw;
   color: white;
-  background-color: #211f1f;
+  background-color: inherit;
   border-bottom: 2px solid gray;
   position: fixed;
   z-index: 102;
@@ -59,6 +83,10 @@ header {
 .header__title {
   margin-left: 20px;
 }
+/*.header__login {
+  border: 1px solid white;
+  padding: 5px;
+}*/
 .right {
   margin-right: 20px;
 }

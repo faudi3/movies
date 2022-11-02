@@ -70,6 +70,9 @@ export default {
   text-decoration: none;
   color: white;
 }
+.option.light {
+  background-color: rgb(11, 0, 20);
+}
 .option p {
   opacity: 0.7;
   transition: all 0.5s ease;
