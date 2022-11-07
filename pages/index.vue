@@ -26,7 +26,10 @@
       </div>
       <Filters class="filters1" />
     </div>
-    <h2 class="heading">250 Лучших Фильмов</h2>
+    <h2 class="heading" v-if="searchInput === ''">250 Лучших Фильмов</h2>
+    <h2 class="heading" v-else>
+      Запрос по <span class="span">{{ searchInput }}</span>
+    </h2>
     <!-- Loading -->
     <Loading v-if="$fetchState.pending" />
     <!-- Movies -->
@@ -177,6 +180,10 @@ export default {
   text-align: center;
   background-color: inherit;
 }
+.span {
+  color: red;
+  font-style: italic;
+}
 .home {
   color: inherit !important;
 }
@@ -220,7 +227,7 @@ export default {
   width: 500px;
   padding: 12px 6px;
   font-size: 14px;
-  border: 2px solid #125d32;
+  border: 1px solid white;
   color: inherit !important;
 }
 .home .search input:focus {

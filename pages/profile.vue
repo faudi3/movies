@@ -1,12 +1,19 @@
 <template>
   <div class="profile container">
     <div v-if="this.$store.state.user.email !== ''">
-      <p class="movies__title">Favourite movies</p>
+      <p class="movies__title">Избранные фильмы</p>
+      <button
+        :class="this.$store.state.mode"
+        class="button clear"
+        @click="clearList"
+      >
+        Очистить избранные
+      </button>
       <newMovies :props="this.$store.state.favList" />
     </div>
 
     <div v-else>
-      <h2>Login to see profile page</h2>
+      <h2>Авторизируйтесь,чтобы увидеть свой профиль</h2>
       <LoginModal />
     </div>
   </div>
@@ -20,7 +27,12 @@ export default {
     };
   },
   name: "profile",
-  methods: {},
+  methods: {
+    async clearList() {
+      let c = this.$store.state.user.email;
+      await this.$store.dispatch("clearList", { c });
+    },
+  },
   async beforeMount() {
     let c = this.$store.state.user.email;
     await this.$store.dispatch("showList", { c });
@@ -42,5 +54,9 @@ export default {
 h2 {
   font-size: 40px;
   text-align: center;
+}
+.clear {
+  display: flex;
+  margin-left: 10px;
 }
 </style>

@@ -59,6 +59,8 @@ export default {
         email: e,
         password: p,
       });
+      localStorage.name = this.$store.state.user.email;
+      localStorage.logged = this.$store.state.isLogged;
     },
     async registerbtn() {
       let e = this.login_form.email;
@@ -67,6 +69,8 @@ export default {
         email: e,
         password: p,
       });
+      localStorage.name = this.$store.state.user.email;
+      localStorage.logged = this.$store.state.isLogged;
     },
   },
 };

@@ -23,7 +23,7 @@
           {{ movie.year }}
         </p>
         <p class="movie-fact">
-          <span>Хронометраж:</span> {{ movie.filmLength }} minutes
+          <span>Хронометраж:</span> {{ movie.filmLength }} минут
         </p>
 
         <p class="movie-fact"><span>Описание:</span> {{ movie.description }}</p>
@@ -123,7 +123,6 @@ export default {
 }
 .single-movie .movie-info .movie-content .movie-fact span {
   font-weight: 600;
-  text-decoration: underline;
 }
 .single-movie .movie-info .movie-content .tagline {
   font-style: italic;

@@ -26,8 +26,8 @@ export default {
 }
 
 .light {
-  background: #cfeadd;
-  color: black;
+  background: black;
+  color: white;
 }
 /*.header {
   background: #bcdfff;

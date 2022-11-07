@@ -71,6 +71,9 @@ export default {
 p {
   color: inherit;
 }
+.button {
+  color: white;
+}
 header {
   height: 50px;
   display: flex;

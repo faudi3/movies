@@ -16,7 +16,11 @@
             Дата выпуска :
             {{ movie.year }}
           </p>
-          <div v-show="$store.state.isLogged == true">
+          <div
+            v-show="
+              $store.state.isLogged === 'true' || $store.state.isLogged === true
+            "
+          >
             <button
               v-if="!checkInList(movie)"
               class="button"
@@ -249,7 +253,7 @@ export default {
     0 2px 4px -1px rgba(0, 0, 0, 0.06);
 }
 .movies-grid .movie .movie-img .review.light {
-  background-color: rgb(112, 94, 128);
+  background-color: rgb(44, 69, 82);
 }
 .movies-grid .movie .movie-img .overview {
   line-height: 1.5;

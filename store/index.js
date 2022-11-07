@@ -12,11 +12,11 @@ import { query, where, getDocs } from "firebase/firestore";
 export const state = () => ({
   optionsList: ["best", "genres", "years"],
   selected: "best",
-  user: { email: "", password: "" },
+  user: { email: localStorage.name, password: "" },
   favList: [],
   currEmail: null,
-  isLogged: false,
-  mode: "dark",
+  isLogged: localStorage.logged,
+  mode: "light",
 });
 
 export const mutations = {
@@ -102,6 +102,21 @@ export const actions = {
     });
     commit("SET_LIST", final);
   },
+  async clearList({ commit }, details) {
+    const q = await query(
+      collection(db, "users"),
+      where("email", "==", details.c)
+    );
+    const qs = await getDocs(q);
+    let final = [];
+    qs.forEach((el) => {
+      let info = el.data().list;
+      const cityRef = doc(db, "users", el.id);
+      setDoc(cityRef, { list: [] }, { merge: true });
+      final = info.concat(details.movie);
+    });
+    commit("CLEAR_LIST");
+  },
   async showList({ commit }, details) {
     const q = await query(
       collection(db, "users"),
@@ -132,6 +147,8 @@ export const actions = {
   },
   async logout({ commit }) {
     const res = await signOut(auth);
+    localStorage.removeItem("name");
+    localStorage.removeItem("logged");
     commit("SET_LOGIN");
 
     commit("CLEAR_USER");
