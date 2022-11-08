@@ -3,7 +3,7 @@
     <Option :props="props" />
     <div class="years__wrap">
       <div class="input">
-        До какого года
+        <p>До какого года</p>
         <input
           v-model.lazy="inputBefore"
           @keyup.enter="saveInputB"
@@ -12,7 +12,7 @@
         />
       </div>
       <div class="input">
-        После какого года
+        <p>После какого года</p>
         <input
           @keyup.enter="saveInputA"
           v-model.lazy="inputAfter"
@@ -20,14 +20,22 @@
           placeholder="2015"
         />
       </div>
-      <button @click="searchWithTwo" class="button btn">искать</button>
+      <button
+        @click="searchWithTwo"
+        class="button btn"
+        :class="this.$store.state.mode"
+      >
+        искать
+      </button>
     </div>
     <div @click="scrollUp" class="scrollToTop">up</div>
 
     <div v-if="years.length > 0" class="movies-wrap">
-      <new-movies :props="years"></new-movies>
+      <Loading v-if="this.load" />
+
+      <newMovies v-else :props="years"></newMovies>
     </div>
-    <div ref="observerYears" class="observer">Больше</div>
+    <div ref="observerYears" class="observer"></div>
   </div>
 </template>
 
@@ -48,7 +56,7 @@ export default {
       convertedInputB: "",
       filter: "",
       whichInput: "",
-      help: 28,
+      load: false,
     };
   },
   methods: {
@@ -58,6 +66,8 @@ export default {
       this.filter = `yearFrom=${this.convertredInputA}&yearTo=${this.convertredInputB}`;
       this.getYear();
       this.years = [];
+      this.page = 1;
+
       this.inputAfter = "";
       this.inputBefore = "";
     },
@@ -68,6 +78,8 @@ export default {
       this.whichInput = this.convertredInputA;
       this.getYear();
       this.years = [];
+      this.page = 1;
+
       this.inputAfter = "";
     },
     saveInputB() {
@@ -76,7 +88,7 @@ export default {
       this.whichInput = this.convertredInputB;
       this.getYear();
       this.years = [];
-
+      this.page = 1;
       this.inputBefore = "";
     },
 
@@ -84,11 +96,13 @@ export default {
       window.scrollTo(0, 0);
     },
     async getYear() {
+      console.log(this.filter);
+      this.load = true;
       if (this.page === 1) {
         this.props.list = [];
       }
       const data = axios.get(
-        `https://kinopoiskapiunofficial.tech/api/v2.2/films?order=RATING&type=ALL&ratingFrom=0&ratingTo=10&${this.filter}&page=1`,
+        `https://kinopoiskapiunofficial.tech/api/v2.2/films?order=RATING&type=ALL&ratingFrom=0&ratingTo=10&${this.filter}&page=${this.page}`,
         {
           method: "GET",
           headers: {
@@ -103,10 +117,10 @@ export default {
         this.years.push(res);
       });
       this.years.forEach((post) => (post.filmId = post.kinopoiskId));
+      this.load = false;
     },
   },
   mounted() {
-    console.log(this.years);
     let options = {
       rootMargin: "0px",
       thresold: 1.0,
@@ -124,8 +138,11 @@ export default {
 
 <style scoped>
 .observer {
-  border: none !important;
-  color: inherit !important;
+  color: white;
+  font-size: 32px;
+  border: 1px solid black;
+  text-align: center;
+  background-color: inherit;
 }
 .movies-wrap {
   width: 80%;
@@ -153,6 +170,10 @@ input:focus {
   width: 80%;
   display: flex;
   flex-direction: column;
+  align-items: center;
+}
+.input > p {
+  margin-bottom: 10px;
 }
 .btn {
   width: 100px;

@@ -58,5 +58,6 @@ h2 {
 .clear {
   display: flex;
   margin-left: 10px;
+  background-color: red;
 }
 </style>

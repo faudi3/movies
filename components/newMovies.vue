@@ -128,6 +128,10 @@ export default {
       }
     },
   },
+  async beforeMount() {
+    let c = this.$store.state.user.email;
+    await this.$store.dispatch("showList", { c });
+  },
 };
 </script>
 

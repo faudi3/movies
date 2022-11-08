@@ -16,7 +16,9 @@
         <h2 v-if="props.title === 'genres'" class="heading">
           Жанр: {{ selectedGenre }}
         </h2>
-        <newMovies :props="props.list"></newMovies>
+        <Loading v-if="load" />
+
+        <newMovies v-else :props="props.list"></newMovies>
         <div ref="observerGenres" class="observer"></div>
       </div>
     </div>
@@ -38,8 +40,10 @@ export default {
       selectedGenre: "триллер",
       selectedGenreId: 1,
       help: 1,
+      load: false,
     };
   },
+
   methods: {
     getClass(idx) {
       if (idx === this.activeIdx) {
@@ -58,6 +62,7 @@ export default {
       await this.getGenre(this.selectedGenreId, 0);
     },
     async getGenre(fid, idx) {
+      this.load = true;
       this.activeIdx = idx;
       if (this.help !== fid) {
         this.page = 1;
@@ -84,8 +89,10 @@ export default {
       });
       this.props.list.forEach((post) => (post.filmId = post.kinopoiskId));
       this.help = fid;
+      this.load = false;
     },
   },
+
   mounted() {
     this.getGenres();
     let options = {

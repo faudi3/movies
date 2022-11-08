@@ -7,7 +7,7 @@
       >главная</NuxtLink
     >
     <p
-      v-if="this.$store.state.user.email !== ''"
+      v-if="this.$store.state.isLogged"
       class="button"
       :class="this.$store.state.mode"
     >
@@ -17,6 +17,7 @@
     <Toggle />
     <div class="right">
       <NuxtLink
+        v-show="this.$store.state.isLogged"
         class="button"
         :class="this.$store.state.mode"
         to="/profile"
