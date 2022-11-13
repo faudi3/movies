@@ -12,10 +12,10 @@
       <newMovies :props="this.$store.state.favList" />
     </div>
 
-    <div v-else>
+    <!--    <div v-else>
       <h2>Авторизируйтесь,чтобы увидеть свой профиль</h2>
       <LoginModal />
-    </div>
+    </div>-->
   </div>
 </template>
 

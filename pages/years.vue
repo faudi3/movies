@@ -96,7 +96,6 @@ export default {
       window.scrollTo(0, 0);
     },
     async getYear() {
-      console.log(this.filter);
       this.load = true;
       if (this.page === 1) {
         this.props.list = [];

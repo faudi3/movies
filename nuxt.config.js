@@ -25,7 +25,11 @@ export default {
   components: true,
 
   // Modules for dev and build (recommended): https://go.nuxtjs.dev/config-modules
-  buildModules: ["@nuxtjs/vuetify", "@nuxtjs/composition-api/module"],
+  buildModules: [
+    "@nuxtjs/vuetify",
+    "@nuxtjs/composition-api/module",
+    "@nuxt/typescript-build",
+  ],
 
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [

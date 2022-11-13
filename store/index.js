@@ -12,10 +12,10 @@ import { query, where, getDocs } from "firebase/firestore";
 export const state = () => ({
   optionsList: ["best", "genres", "years"],
   selected: "best",
-  user: { email: localStorage.name, password: "" },
+  user: { email: localStorage.name || null, password: "" },
   favList: [],
   currEmail: null,
-  isLogged: localStorage.logged,
+  isLogged: localStorage.logged || false,
   mode: "light",
 });
 

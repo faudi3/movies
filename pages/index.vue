@@ -35,11 +35,12 @@
     <!-- Movies -->
     <div class="container movies">
       <!-- new Movies -->
+
       <newMovies v-if="searchInput === ''" :props="movies"> </newMovies>
       <!--  searched Movies -->
       <newMovies :props="searchedMovies"> </newMovies>
     </div>
-    <div ref="observerRef" class="observer"></div>
+    <div ref="observerRef" class="observer">More</div>
   </div>
 </template>
 
@@ -176,7 +177,7 @@ export default {
 .observer {
   color: white;
   font-size: 32px;
-  border: 1px solid inherit;
+  border: 1px solid black;
   text-align: center;
   background-color: inherit;
 }

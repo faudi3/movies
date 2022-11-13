@@ -39,14 +39,20 @@
             </button>
             <!--            <button class="button" @click="checkInList(movie)">test</button>-->
           </div>
+          <keep-alive>
+            <router-view :key="$route.fullPath"></router-view>
+            <NuxtLink
+              class="button button-light"
+              :class="$store.state.mode"
+              :to="{
+                name: 'movies-movieid',
+                params: { movieid: movie.filmId },
+              }"
+            >
+              Больше
+            </NuxtLink>
+          </keep-alive>
 
-          <NuxtLink
-            class="button button-light"
-            :class="$store.state.mode"
-            :to="{ name: 'movies-movieid', params: { movieid: movie.filmId } }"
-          >
-            Больше
-          </NuxtLink>
           <!--          <button @click="saveFilm(movie)" class="button" v-else>
             More Info
           </button>-->

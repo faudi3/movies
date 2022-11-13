@@ -29,9 +29,9 @@
         <p class="movie-fact"><span>Описание:</span> {{ movie.description }}</p>
       </div>
     </div>
-    <NuxtLink class="button" :class="$store.state.mode" :to="{ name: 'index' }">
+    <button class="button" :class="$store.state.mode" @click="back">
       Назад
-    </NuxtLink>
+    </button>
   </div>
 </template>
 
@@ -57,6 +57,9 @@ export default {
     };
   },
   methods: {
+    back() {
+      this.$router.go(-1);
+    },
     async getSingleMovie() {
       const data = axios.get(
         `https://kinopoiskapiunofficial.tech/api/v2.2/films/${this.$route.params.movieid}`,
