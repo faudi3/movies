@@ -3,3 +3,5 @@
 
 ### Stack
 NuxtJS, Firebase, Observer API, VueX, Kinopoisk API
+
+# https://movies-p4bmbd86c-faudi3.vercel.app/
