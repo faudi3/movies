@@ -177,7 +177,7 @@ export default {
 .observer {
   color: white;
   font-size: 32px;
-  border: 1px solid black;
+  border: 1px solid gray;
   text-align: center;
   background-color: inherit;
 }
